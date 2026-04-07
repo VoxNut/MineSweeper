@@ -1,0 +1,108 @@
+# =========================================================
+# Antigravity IDE / Java Web Project (.gitignore)
+# Suitable for JSP / Servlet projects
+# =========================================================
+
+# =========================
+# Build folders
+# =========================
+/build/
+/dist/
+/target/
+/out/
+/bin/
+
+# =========================
+# Java compiled files
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# IDE settings
+# =========================
+
+# Antigravity IDE
+.antigravity/
+.antigravity-cache/
+.antigravity-workspace/
+*.agproj
+*.agworkspace
+
+# VSCode
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# =========================
+# Maven
+# =========================
+.mvn/wrapper/maven-wrapper.jar
+
+# =========================
+# Gradle
+# =========================
+.gradle/
+
+# =========================
+# Node.js (if frontend exists)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Environment files
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.temp
+*.swp
+*.bak
+*~
+
+# =========================
+# Cache
+# =========================
+.cache/
+
+
+src/main/resources/*
+Diagram/*
+source code/*
