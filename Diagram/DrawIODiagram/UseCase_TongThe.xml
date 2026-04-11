@@ -1,0 +1,284 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ============================================================ -->
+    <!--  ACTORS                                                       -->
+    <!-- ============================================================ -->
+
+    <!-- Actor: Người dùng (Guest) -->
+    <mxCell id="actor_guest" value="Người dùng&#xa;(Chưa đăng nhập)" style="shape=mxgraph.flowchart.start_2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Arial;fontSize=11;fontStyle=1;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="30" y="340" width="40" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Actor: Người chơi (Player) -->
+    <mxCell id="actor_player" value="Người chơi&#xa;(Player)" style="shape=mxgraph.flowchart.start_2;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Arial;fontSize=11;fontStyle=1;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="30" y="680" width="40" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Actor: Admin -->
+    <mxCell id="actor_admin" value="Admin" style="shape=mxgraph.flowchart.start_2;fillColor=#ffe6cc;strokeColor=#d6b656;fontFamily=Arial;fontSize=11;fontStyle=1;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="30" y="1080" width="40" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Actor: Firebase (System) -->
+    <mxCell id="actor_firebase" value="Firebase&#xa;(System)" style="shape=mxgraph.flowchart.start_2;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Arial;fontSize=11;fontStyle=1;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="980" y="220" width="40" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!--  BOUNDARY 1: Xác thực & Tài khoản                            -->
+    <!-- ============================================================ -->
+    <mxCell id="boundary_auth" value="&lt;b&gt;Hệ thống Xác thực &amp; Tài khoản&lt;/b&gt;" style="swimlane;startSize=30;fillColor=none;strokeColor=#6c8ebf;strokeWidth=2;fontFamily=Arial;fontSize=13;fontStyle=1;dashed=0;" vertex="1" parent="1">
+      <mxGeometry x="140" y="140" width="760" height="520" as="geometry" />
+    </mxCell>
+
+    <!-- UC-1: Đăng nhập với Google -->
+    <mxCell id="uc1" value="UC-1&#xa;Đăng nhập với Google" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="50" y="60" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-2: Đăng nhập với Email/Password -->
+    <mxCell id="uc2" value="UC-2&#xa;Đăng nhập Email/Password" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="50" y="160" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-3: Đăng ký tài khoản -->
+    <mxCell id="uc3" value="UC-3&#xa;Đăng ký tài khoản" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="50" y="260" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-4: Quên mật khẩu -->
+    <mxCell id="uc4" value="UC-4&#xa;Quên mật khẩu" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="50" y="360" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-5: Đăng xuất -->
+    <mxCell id="uc5" value="UC-5&#xa;Đăng xuất" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="50" y="440" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-6: Đăng nhập Admin -->
+    <mxCell id="uc6" value="UC-6&#xa;Đăng nhập Admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="460" y="160" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-A: Xác thực Firebase Token (included) -->
+    <mxCell id="uc_token" value="&lt;&lt;include&gt;&gt;&#xa;Xác thực Firebase Token" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontFamily=Arial;fontSize=10;fontStyle=2;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="460" y="300" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-B: Gửi email đặt lại mật khẩu (included by UC-4) -->
+    <mxCell id="uc_resetmail" value="&lt;&lt;include&gt;&gt;&#xa;Gửi email đặt lại mật khẩu" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontFamily=Arial;fontSize=10;fontStyle=2;" vertex="1" parent="boundary_auth">
+      <mxGeometry x="460" y="420" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!--  BOUNDARY 2: Hệ thống Game                                   -->
+    <!-- ============================================================ -->
+    <mxCell id="boundary_game" value="&lt;b&gt;Hệ thống Trò chơi&lt;/b&gt;" style="swimlane;startSize=30;fillColor=none;strokeColor=#82b366;strokeWidth=2;fontFamily=Arial;fontSize=13;fontStyle=1;dashed=0;" vertex="1" parent="1">
+      <mxGeometry x="140" y="700" width="760" height="360" as="geometry" />
+    </mxCell>
+
+    <!-- UC-7: Xem hướng dẫn chơi -->
+    <mxCell id="uc7" value="UC-7&#xa;Xem hướng dẫn chơi" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_game">
+      <mxGeometry x="50" y="60" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-8: Chơi game -->
+    <mxCell id="uc8" value="UC-8&#xa;Chơi game" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_game">
+      <mxGeometry x="50" y="160" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-9: Xem bảng xếp hạng -->
+    <mxCell id="uc9" value="UC-9&#xa;Xem bảng xếp hạng" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_game">
+      <mxGeometry x="50" y="260" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-10: Xem lịch sử chơi -->
+    <mxCell id="uc10" value="UC-10&#xa;Xem lịch sử chơi" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_game">
+      <mxGeometry x="460" y="60" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-C: Lưu kết quả / cập nhật điểm (extended from UC-8) -->
+    <mxCell id="uc_savescore" value="&lt;&lt;extend&gt;&gt;&#xa;Lưu kết quả &amp; cập nhật điểm" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontFamily=Arial;fontSize=10;fontStyle=2;" vertex="1" parent="boundary_game">
+      <mxGeometry x="460" y="160" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-D: Lọc / tìm kiếm lịch sử (extended from UC-10) -->
+    <mxCell id="uc_filter" value="&lt;&lt;extend&gt;&gt;&#xa;Lọc / Tìm kiếm lịch sử" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontFamily=Arial;fontSize=10;fontStyle=2;" vertex="1" parent="boundary_game">
+      <mxGeometry x="460" y="260" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!--  BOUNDARY 3: Quản trị hệ thống (Admin)                       -->
+    <!-- ============================================================ -->
+    <mxCell id="boundary_admin" value="&lt;b&gt;Quản trị hệ thống (Admin)&lt;/b&gt;" style="swimlane;startSize=30;fillColor=none;strokeColor=#d6b656;strokeWidth=2;fontFamily=Arial;fontSize=13;fontStyle=1;dashed=0;" vertex="1" parent="1">
+      <mxGeometry x="140" y="1100" width="760" height="340" as="geometry" />
+    </mxCell>
+
+    <!-- UC-11: Xem Dashboard -->
+    <mxCell id="uc11" value="UC-11&#xa;Xem Dashboard" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_admin">
+      <mxGeometry x="50" y="60" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-12: Quản lý người dùng -->
+    <mxCell id="uc12" value="UC-12&#xa;Quản lý người dùng" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_admin">
+      <mxGeometry x="50" y="160" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-13: Quản lý lịch sử chơi / Điểm -->
+    <mxCell id="uc13" value="UC-13&#xa;Quản lý lịch sử chơi / Điểm" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_admin">
+      <mxGeometry x="50" y="260" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-14: Cấu hình game (Độ khó) -->
+    <mxCell id="uc14" value="UC-14&#xa;Cấu hình game (Độ khó)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontFamily=Arial;fontSize=11;" vertex="1" parent="boundary_admin">
+      <mxGeometry x="460" y="60" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-E: Xem thống kê tổng hợp (included by UC-11) -->
+    <mxCell id="uc_stats" value="&lt;&lt;include&gt;&gt;&#xa;Xem thống kê tổng hợp" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontFamily=Arial;fontSize=10;fontStyle=2;" vertex="1" parent="boundary_admin">
+      <mxGeometry x="460" y="170" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC-F: Khóa / mở khóa tài khoản (extended from UC-12) -->
+    <mxCell id="uc_lock" value="&lt;&lt;extend&gt;&gt;&#xa;Khóa / Mở khóa tài khoản" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontFamily=Arial;fontSize=10;fontStyle=2;" vertex="1" parent="boundary_admin">
+      <mxGeometry x="460" y="260" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!--  ASSOCIATIONS: Actor -> Use Cases                             -->
+    <!-- ============================================================ -->
+
+    <!-- Guest -> UC1 -->
+    <mxCell id="e_g_uc1" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_guest" target="uc1" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Guest -> UC2 -->
+    <mxCell id="e_g_uc2" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_guest" target="uc2" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Guest -> UC3 -->
+    <mxCell id="e_g_uc3" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_guest" target="uc3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Guest -> UC4 -->
+    <mxCell id="e_g_uc4" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_guest" target="uc4" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Player -> UC5 -->
+    <mxCell id="e_p_uc5" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_player" target="uc5" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Player -> UC7 -->
+    <mxCell id="e_p_uc7" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_player" target="uc7" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Player -> UC8 -->
+    <mxCell id="e_p_uc8" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_player" target="uc8" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Player -> UC9 -->
+    <mxCell id="e_p_uc9" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_player" target="uc9" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Player -> UC10 -->
+    <mxCell id="e_p_uc10" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_player" target="uc10" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Admin -> UC6 -->
+    <mxCell id="e_a_uc6" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_admin" target="uc6" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Admin -> UC11 -->
+    <mxCell id="e_a_uc11" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_admin" target="uc11" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Admin -> UC12 -->
+    <mxCell id="e_a_uc12" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_admin" target="uc12" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Admin -> UC13 -->
+    <mxCell id="e_a_uc13" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_admin" target="uc13" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Admin -> UC14 -->
+    <mxCell id="e_a_uc14" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_admin" target="uc14" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Firebase -> UC1 (xác thực) -->
+    <mxCell id="e_fb_uc1" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_firebase" target="uc1" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Firebase -> UC-token -->
+    <mxCell id="e_fb_token" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_firebase" target="uc_token" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <!-- Firebase -> UC-resetmail -->
+    <mxCell id="e_fb_reset" style="edgeStyle=orthogonalEdgeStyle;fontFamily=Arial;fontSize=10;" edge="1" source="actor_firebase" target="uc_resetmail" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!--  INCLUDE / EXTEND RELATIONSHIPS (inside boundaries)           -->
+    <!-- ============================================================ -->
+
+    <!-- UC1 --include--> uc_token -->
+    <mxCell id="inc_uc1_token" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc1" target="uc_token" parent="boundary_auth">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC2 --include--> uc_token -->
+    <mxCell id="inc_uc2_token" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc2" target="uc_token" parent="boundary_auth">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC3 --include--> uc_token -->
+    <mxCell id="inc_uc3_token" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc3" target="uc_token" parent="boundary_auth">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC6 --include--> uc_token -->
+    <mxCell id="inc_uc6_token" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc6" target="uc_token" parent="boundary_auth">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC4 --include--> uc_resetmail -->
+    <mxCell id="inc_uc4_reset" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc4" target="uc_resetmail" parent="boundary_auth">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC8 --extend--> uc_savescore -->
+    <mxCell id="ext_uc8_save" value="&lt;&lt;extend&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc_savescore" target="uc8" parent="boundary_game">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC10 --extend--> uc_filter -->
+    <mxCell id="ext_uc10_filter" value="&lt;&lt;extend&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc_filter" target="uc10" parent="boundary_game">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC11 --include--> uc_stats -->
+    <mxCell id="inc_uc11_stats" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc11" target="uc_stats" parent="boundary_admin">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC12 --extend--> uc_lock -->
+    <mxCell id="ext_uc12_lock" value="&lt;&lt;extend&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;fontFamily=Arial;fontSize=10;endFill=0;" edge="1" source="uc_lock" target="uc12" parent="boundary_admin">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!--  LEGEND                                                       -->
+    <!-- ============================================================ -->
+    <mxCell id="legend" value="&lt;b&gt;Chú thích&lt;/b&gt;&#xa;— Liên kết Actor-UC&#xa;-- &lt;&lt;include&gt;&gt; : UC bắt buộc gọi UC khác&#xa;-- &lt;&lt;extend&gt;&gt; : UC tuỳ chọn mở rộng UC khác&#xa;□ Boundary: Phạm vi hệ thống" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=8;fontFamily=Arial;fontSize=11;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="980" y="380" width="260" height="110" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>
