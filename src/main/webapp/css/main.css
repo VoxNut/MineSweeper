@@ -1,2 +1,468 @@
-/* CSS Skeleton: Global style rules */
-body { font-family: sans-serif; }
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap");
+
+:root {
+    --bg: #f3e7d3;
+    --bg-deep: #e6d4b9;
+    --card: #fbf4e8;
+    --card-strong: #f7ead6;
+    --text: #4b3a2a;
+    --muted: #7c6a57;
+    --border: #dbcab3;
+    --accent: #b0784f;
+    --accent-dark: #8b5a36;
+    --danger: #a45b4a;
+    --success: #7b8a5a;
+    --shadow: 0 14px 30px rgba(79, 58, 40, 0.16);
+    --shadow-soft: 0 10px 20px rgba(79, 58, 40, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Nunito", "Trebuchet MS", sans-serif;
+    color: var(--text);
+    background:
+            radial-gradient(circle at top left, rgba(255, 249, 240, 0.9), transparent 45%),
+            radial-gradient(circle at bottom right, rgba(224, 198, 170, 0.6), transparent 55%),
+            linear-gradient(135deg, var(--bg), var(--bg-deep));
+    background-attachment: fixed;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+            radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.35), transparent 35%),
+            radial-gradient(circle at 80% 80%, rgba(210, 178, 145, 0.35), transparent 40%);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+a {
+    color: var(--accent-dark);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+h1,
+h2,
+.brand-title {
+    font-family: "Playfair Display", serif;
+}
+
+.title {
+    margin: 0 0 6px;
+    font-size: 2.4rem;
+    letter-spacing: 0.5px;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 28px 20px 36px;
+    animation: pageFade 0.5s ease;
+}
+
+.page.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 26px;
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+    animation: cardRise 0.6s ease;
+}
+
+.card.cozy {
+    background: var(--card-strong);
+}
+
+.card.wide {
+    max-width: 980px;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.row.space {
+    justify-content: space-between;
+}
+
+.row.stats {
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.row.actions {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 10px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, #bf8456, var(--accent-dark));
+    color: #ffffff;
+    border-color: var(--accent-dark);
+    box-shadow: var(--shadow-soft);
+}
+
+.btn.primary:hover {
+    transform: translateY(-1px);
+}
+
+.btn.ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--accent-dark);
+}
+
+.btn.full {
+    width: 100%;
+}
+
+label {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+input,
+select {
+    border: 1px solid var(--border);
+    background: #fff9f0;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-family: inherit;
+    color: var(--text);
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid rgba(176, 120, 79, 0.35);
+    outline-offset: 1px;
+}
+
+/* ─── Shared topbar ─── */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    background: rgba(251, 244, 232, 0.95);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-soft);
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.brand-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.brand-title:hover {
+    color: var(--accent-dark);
+}
+
+.brand-sub {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(176, 120, 79, 0.4);
+}
+
+.btn-lg {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+}
+
+/* ─── Shared footer ─── */
+.site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: flex;
+    gap: 16px;
+}
+
+.footer-links a {
+    color: var(--muted);
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--accent);
+}
+
+/* ─── Lucide icon sizing ─── */
+.icon-sm {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    vertical-align: middle;
+}
+
+.icon-md {
+    width: 28px;
+    height: 28px;
+    stroke: var(--accent-dark);
+    stroke-width: 1.8;
+    fill: none;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.hidden {
+    display: none;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 12px 0 18px;
+}
+
+.stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+}
+
+.stat-value-lg {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.score-line {
+    margin-top: 6px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.score-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(176, 120, 79, 0.15);
+    border: 1px solid rgba(176, 120, 79, 0.25);
+    color: var(--accent-dark);
+    font-weight: 700;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 12px;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.table thead th {
+    background: rgba(176, 120, 79, 0.15);
+    font-weight: 700;
+}
+
+.table tbody tr:hover {
+    background: rgba(176, 120, 79, 0.08);
+}
+
+.links {
+    margin-top: 8px;
+}
+
+.alert-root {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.alert {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    border-radius: 14px;
+    min-width: 230px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.alert.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.alert.error {
+    border-color: #c47d6a;
+    background: #f3e3d9;
+}
+
+.alert.success {
+    border-color: #96a37b;
+    background: #eef1e3;
+}
+
+.alert.info {
+    border-color: var(--border);
+    background: var(--card);
+}
+
+.alert-text {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.alert-close {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes cardRise {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
