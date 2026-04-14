@@ -1,2 +1,448 @@
-/* CSS Skeleton: Home view CSS styling */
-body { font-family: sans-serif; }
+/* ═══════════════════════════════════════
+   HOME PAGE
+   ═══════════════════════════════════════ */
+
+.home-main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+}
+
+/* ─── Hero ─── */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 64px 0 48px;
+}
+
+.hero-title {
+    font-family: "Playfair Display", serif;
+    font-size: 3.2rem;
+    margin: 0 0 12px;
+    line-height: 1.15;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.hero-icon {
+    display: inline-flex;
+    animation: heroBob 2.4s ease-in-out infinite;
+}
+
+.hero-icon svg {
+    width: 48px;
+    height: 48px;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin: 0 0 16px;
+    font-weight: 600;
+}
+
+.hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0 0 28px;
+    max-width: 480px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ─── Mini board preview ─── */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.mini-board {
+    display: grid;
+    grid-template-columns: repeat(4, 56px);
+    gap: 6px;
+    background: #c9ab86;
+    padding: 14px;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    animation: boardFloat 4s ease-in-out infinite;
+}
+
+.mini-cell {
+    width: 56px;
+    height: 56px;
+    background: #d4b896;
+    border-radius: 8px;
+    border: 1px solid rgba(122, 92, 68, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #493728;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45), inset 0 -2px 0 rgba(86, 64, 46, 0.15);
+    user-select: none;
+}
+
+.mini-cell.revealed {
+    background: #faf4ea;
+    box-shadow: inset 0 1px 3px rgba(86, 64, 46, 0.12);
+    border-color: rgba(122, 92, 68, 0.1);
+}
+
+.mini-cell.flagged {
+    background: #cfae8a;
+}
+
+.mini-cell.flagged svg {
+    width: 55%;
+    height: 55%;
+}
+
+/* ─── Features ─── */
+.features {
+    padding: 48px 0;
+}
+
+.section-title {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 0 32px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+}
+
+.feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    border-radius: 12px;
+    background: var(--card-strong);
+    border: 1px solid var(--border);
+}
+
+.feature-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-dark);
+    stroke-width: 1.8;
+    fill: none;
+}
+
+.feature-card h3 {
+    font-family: "Playfair Display", serif;
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+}
+
+.feature-card p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ─── CTA ─── */
+.cta-section {
+    padding: 40px 0;
+}
+
+.cta-card {
+    background: linear-gradient(135deg, #c9ab86, #b0784f);
+    border-radius: 22px;
+    padding: 48px 32px;
+    text-align: center;
+    color: #fff;
+    box-shadow: var(--shadow);
+}
+
+.cta-card h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    margin: 0 0 10px;
+}
+
+.cta-card p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    margin: 0 0 24px;
+}
+
+.cta-card .btn.primary {
+    background: #fff;
+    color: var(--accent-dark);
+    border-color: #fff;
+}
+
+.cta-card .btn.primary:hover {
+    background: #faf4ea;
+}
+
+/* ═══════════════════════════════════════
+   HOW TO PLAY PAGE
+   ═══════════════════════════════════════ */
+
+.htp-main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
+
+.htp-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 40px 36px;
+    box-shadow: var(--shadow);
+    animation: cardRise 0.6s ease;
+}
+
+.htp-title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.4rem;
+    margin: 0 0 12px;
+    text-align: center;
+}
+
+.htp-intro {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 0 36px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.htp-section {
+    margin-bottom: 32px;
+}
+
+.htp-section h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 12px;
+}
+
+.htp-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #bf8456, var(--accent-dark));
+    color: #fff;
+    font-family: "Nunito", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.htp-section p {
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0 0 10px;
+}
+
+/* Controls grid */
+.controls-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.control-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card-strong);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+}
+
+.control-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(176, 120, 79, 0.12);
+}
+
+.control-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--accent-dark);
+    stroke-width: 1.8;
+    fill: none;
+}
+
+.control-card strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.control-card p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+/* Number examples */
+.number-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 14px 0;
+}
+
+.num-example {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card-strong);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+}
+
+.num-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #faf4ea;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid rgba(122, 92, 68, 0.1);
+    box-shadow: inset 0 1px 3px rgba(86, 64, 46, 0.12);
+}
+
+/* Difficulty table */
+.diff-table-wrap {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+/* Tips */
+.tips-list {
+    padding-left: 20px;
+    line-height: 1.8;
+    color: var(--text);
+}
+
+.tips-list li {
+    margin-bottom: 8px;
+}
+
+.tips-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* CTA at bottom */
+.htp-cta {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+}
+
+/* ─── Animations ─── */
+@keyframes heroBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes boardFloat {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 700px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 40px 0 32px;
+    }
+
+    .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        order: -1;
+    }
+
+    .mini-board {
+        grid-template-columns: repeat(4, 46px);
+    }
+
+    .mini-cell {
+        width: 46px;
+        height: 46px;
+        font-size: 0.95rem;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .htp-container {
+        padding: 28px 20px;
+    }
+
+    .site-footer {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}
