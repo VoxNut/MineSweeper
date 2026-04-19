@@ -7,3 +7,5 @@
 
 /* Google Authenticator initialized */
 console.log('UC-1 Google Login stub loaded');
+
+/* Forgot password handling auth triggers */
