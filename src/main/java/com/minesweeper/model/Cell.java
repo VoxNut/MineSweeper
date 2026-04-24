@@ -1,9 +1,43 @@
 package com.minesweeper.model;
 
-/**
- * Skeleton for Cell
- * UC feature: Game Grid Cell definitions
- */
 public class Cell {
-    // TODO: Stub methods for developer review
+    private boolean isMine;
+    private boolean isRevealed;
+    private boolean isFlagged;
+    private int adjacentMines;
+
+    public Cell() {
+    }
+
+    public boolean isMine() {
+        return isMine;
+    }
+
+    public void setMine(boolean mine) {
+        isMine = mine;
+    }
+
+    public boolean isRevealed() {
+        return isRevealed;
+    }
+
+    public void setRevealed(boolean revealed) {
+        isRevealed = revealed;
+    }
+
+    public boolean isFlagged() {
+        return isFlagged;
+    }
+
+    public void setFlagged(boolean flagged) {
+        isFlagged = flagged;
+    }
+
+    public int getAdjacentMines() {
+        return adjacentMines;
+    }
+
+    public void setAdjacentMines(int adjacentMines) {
+        this.adjacentMines = adjacentMines;
+    }
 }
