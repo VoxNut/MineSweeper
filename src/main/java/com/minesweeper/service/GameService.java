@@ -9,3 +9,7 @@ public class GameService {
 }
 
 // Commit: Tạo GameService để quản lý trạng thái trò chơi (UC-8) | Author: Nguyễn Đức Khải | Date: 2026-04-25 15:30:45
+
+/* Loang empty cells BFS logic */
+
+// Commit: Hiện thực thuật toán loang (reveal empty cells) trong GameService.java | Author: Nguyễn Đức Khải | Date: 2026-04-30 08:30:00
