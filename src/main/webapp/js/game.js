@@ -6,3 +6,7 @@
 })();
 
 // Commit: Viết game.js để vẽ bảng game và bắt các sự kiện click chuột | Author: Nguyễn Đức Khải | Date: 2026-04-26 16:20:00
+
+/* Open cells click events */
+
+// Commit: Xử lý sự kiện click mở ô và cắm cờ trong game.js | Author: Nguyễn Đức Khải | Date: 2026-04-30 14:15:20
