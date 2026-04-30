@@ -7,3 +7,5 @@ package com.minesweeper.service;
 public class GameService {
     // TODO: Stub methods for developer review
 }
+
+/* Loang empty cells BFS logic */
