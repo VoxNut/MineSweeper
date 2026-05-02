@@ -6,3 +6,5 @@
 })();
 
 /* Open cells click events */
+
+/* Fix click issues on revealed cells */
