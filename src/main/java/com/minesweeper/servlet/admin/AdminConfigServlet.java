@@ -109,3 +109,7 @@ public class AdminConfigServlet extends HttpServlet {
     }
 }
 // Commit: Viết AdminConfigServlet hỗ trợ lưu cấu hình số hàng, số cột, số mìn | Author: Vũ Văn Long | Date: 2026-05-18 22:05:12
+
+/* Fixed minor bug when parsing mines input range limits */
+
+// Commit: Sửa lỗi không lưu đúng số mìn trong AdminConfigServlet | Author: Vũ Văn Long | Date: 2026-05-24 10:20:15
