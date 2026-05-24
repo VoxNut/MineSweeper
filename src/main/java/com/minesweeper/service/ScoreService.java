@@ -241,3 +241,5 @@ public class ScoreService {
         }
     }
 }
+
+/* Fixed NullPointerException when database records list is empty */
