@@ -243,3 +243,7 @@ public class ScoreService {
 }
 
 // Commit: Hoàn thiện ScoreService xử lý logic lưu điểm nâng cao | Author: Tạ Văn Huy | Date: 2026-05-03 20:45:10
+
+/* Fixed NullPointerException when database records list is empty */
+
+// Commit: Sửa lỗi null pointer khi lọc bảng xếp hạng không có dữ liệu | Author: Tạ Văn Huy | Date: 2026-05-24 21:10:22
