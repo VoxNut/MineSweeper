@@ -313,3 +313,7 @@ updateCustomVisibility();
 newGame();
 
 // Commit: Gọi API lưu điểm khi thắng hoặc thua game trong game.js | Author: Nguyễn Đức Khải | Date: 2026-05-03 15:20:00
+
+/* Game completion popup status updates */
+
+// Commit: Cập nhật game.js để hiển thị thông báo toast khi thắng/thua | Author: Nguyễn Đức Khải | Date: 2026-05-26 22:15:30
