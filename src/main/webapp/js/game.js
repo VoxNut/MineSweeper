@@ -311,3 +311,5 @@ if (overlayNew) {
 
 updateCustomVisibility();
 newGame();
+
+/* Game completion popup status updates */
