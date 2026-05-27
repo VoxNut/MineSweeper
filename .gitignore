@@ -106,3 +106,6 @@ yarn-error.log*
 src/main/resources/*
 Diagram/*
 source code/*
+
+generate_git_history.py
+generate_revision_history.py
