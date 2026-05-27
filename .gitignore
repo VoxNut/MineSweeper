@@ -107,5 +107,7 @@ src/main/resources/*
 Diagram/*
 source code/*
 
+src\test
+
 generate_git_history.py
 generate_revision_history.py
