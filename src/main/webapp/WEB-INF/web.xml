@@ -155,3 +155,7 @@
 </web-app>
 
 <!-- Commit: Cấu hình tự động gọi AdminSeeder khi khởi tạo ứng dụng | Author: Nguyễn Duy Khánh | Date: 2026-05-24 15:30:45 -->
+
+<!-- Security constraint routes filters updated -->
+
+<!-- Commit: Bổ sung cấu hình điều hướng an toàn trong web.xml | Author: Nguyễn Duy Khánh | Date: 2026-05-28 21:55:00 -->
