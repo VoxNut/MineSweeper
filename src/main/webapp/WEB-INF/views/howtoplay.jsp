@@ -155,3 +155,5 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
+
+<!-- Step-by-step imagery guide mapping cards -->
