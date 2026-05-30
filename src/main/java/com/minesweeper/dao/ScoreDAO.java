@@ -103,3 +103,5 @@ public class ScoreDAO {
 }
 
 /* Added query filters for game level difficulty scores */
+
+/* Index Firestore optimization scores sorting query */
