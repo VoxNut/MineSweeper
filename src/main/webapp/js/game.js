@@ -317,3 +317,7 @@ newGame();
 /* Game completion popup status updates */
 
 // Commit: Cập nhật game.js để hiển thị thông báo toast khi thắng/thua | Author: Nguyễn Đức Khải | Date: 2026-05-26 22:15:30
+
+/* Flag click prevent trigger propagation issue fixed */
+
+// Commit: Sửa lỗi cắm cờ vẫn kích hoạt loang ô khi click đúp nhanh | Author: Nguyễn Đức Khải | Date: 2026-05-30 15:10:45
