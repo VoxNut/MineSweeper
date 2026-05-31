@@ -70,6 +70,8 @@ public class AuthFilter implements Filter {
                 || path.equals("/login")
                 || path.equals("/admin/login")
                 || path.startsWith("/auth/")
+                // UC-9 (9.1.2, BR5): /leaderboard là trang công khai;
+                // không yêu cầu đăng nhập, cả Guest đều được truy cập.
                 || path.equals("/leaderboard")
                 || path.startsWith("/leaderboard/")
                 || path.startsWith("/css/")

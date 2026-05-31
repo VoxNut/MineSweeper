@@ -12,6 +12,11 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.minesweeper.model.Score;
 import com.minesweeper.util.FirebaseUtil;
 
+/**
+ * DAO quản lý thao tác đọc/ghi bản ghi điểm số (Score) trên Firestore.
+ * Liên quan tới: UC-9 (Xem bảng xếp hạng), UC-8 (Xem lịch sử cá nhân).
+ */
+
 public class ScoreDAO {
     private final Firestore db;
 
@@ -26,19 +31,47 @@ public class ScoreDAO {
         return ref.getId();
     }
 
+    /**
+     * UC-9 (9.1.6): Truy vấn Firestore lấy danh sách điểm số hàng đầu.
+     * <p>
+     * Logic áp dụng (theo thứ tự):
+     * <ol>
+     * <li>UC-9 (9.1.6.1, BR1): Lọc result = "win" — chỉ vàn thắng mới được
+     * xét.</li>
+     * <li>UC-9 (9.1.6.2, BR2): Lọc flagged = false — loại bỏ bản ghi bị đánh dấu
+     * gian lận.</li>
+     * <li>UC-9 (9.1.6.3): Nếu difficulty không phải "all", thêm điều kiện lọc
+     * difficulty.</li>
+     * <li>UC-9 (9.1.6.4, BR3): Sắp xếp theo timeSec tăng dần — thời gian càng ngắn,
+     * thứ hạng càng cao.</li>
+     * <li>UC-9 (9.1.6.5, BR4): Giới hạn số bản ghi trả về theo tham số limit (mặc
+     * định 20).</li>
+     * </ol>
+     *
+     * @param difficulty mức độ khó cần lọc (null / "all" = không lọc theo độ khó).
+     * @param limit      số bản ghi tối đa cần trả về.
+     * @return danh sách Score được sắp xếp theo timeSec tăng dần.
+     */
     public List<Score> getTopScores(String difficulty, int limit) throws ExecutionException, InterruptedException {
+        // UC-9 (9.1.6.1, BR1): Chỉ lấy các ván thắng (result = "win").
+        // UC-9 (9.1.6.2, BR2): Loại bỏ bản ghi bị đánh dấu gian lận (flagged = false).
         Query query = db.collection("scores")
                 .whereEqualTo("result", "win")
                 .whereEqualTo("flagged", false);
+        // UC-9 (9.1.6.3): Thêm điều kiện lọc theo difficulty nếu không phải "all".
         if (difficulty != null && !difficulty.isEmpty() && !"all".equalsIgnoreCase(difficulty)) {
             query = query.whereEqualTo("difficulty", difficulty);
         }
+        // UC-9 (9.1.6.4, BR3): Sắp xếp theo timeSec tăng dần.
+        // UC-9 (9.1.6.5, BR4): Giới hạn kết quả (mặc định 20 bản ghi).
         query = query.orderBy("timeSec", Query.Direction.ASCENDING).limit(limit);
         QuerySnapshot snapshot = query.get().get();
+        // UC-9 (9.1.7): Ánh xạ kết quả Firestore thành danh sách đối tượng Score.
         return mapScores(snapshot);
     }
 
-    public List<Score> getAllScores(String difficulty, String uid, Boolean flagged) throws ExecutionException, InterruptedException {
+    public List<Score> getAllScores(String difficulty, String uid, Boolean flagged)
+            throws ExecutionException, InterruptedException {
         Query query = db.collection("scores");
         if (difficulty != null && !difficulty.isEmpty() && !"all".equalsIgnoreCase(difficulty)) {
             query = query.whereEqualTo("difficulty", difficulty);
