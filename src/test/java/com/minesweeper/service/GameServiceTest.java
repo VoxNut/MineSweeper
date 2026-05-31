@@ -27,4 +27,4 @@ public class GameServiceTest {
     }
 }
 
-// Commit: Viết unit test cho GameService kiểm tra logic rải mìn | Author: Nguyễn Đức Khải | Date: 2026-05-31 10:15:30
+// Commit: Hoàn thành unit test GameServiceTest đầy đủ kịch bản | Author: Nguyễn Đức Khải | Date: 2026-05-31 15:40:00
