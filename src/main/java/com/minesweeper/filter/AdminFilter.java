@@ -31,10 +31,13 @@ public class AdminFilter implements Filter {
 
         HttpSession session = httpRequest.getSession(false);
 
+        // [UC-13] 13.1.3 / 13.2.3 Với request /admin/users, kiểm tra session có thuộc admin hay không.
         if (session != null && "admin".equals(session.getAttribute("role"))) {
+            // [UC-13] 13.1.4 Cho request admin hợp lệ đi tiếp đến AdminUserServlet.
             chain.doFilter(request, response);
             return;
         }
+        // [UC-13] 13.2.1 Redirect người chưa đăng nhập hoặc không phải admin về /home.
         httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
     }
 

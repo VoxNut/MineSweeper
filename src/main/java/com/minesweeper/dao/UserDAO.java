@@ -48,18 +48,22 @@ public class UserDAO {
     }
 
     public List<User> getAll() throws ExecutionException, InterruptedException {
+        // [UC-13] 13.1.7 / 13.1.8 Truy vấn collection users trên Firestore để lấy danh sách người dùng cho admin.
         QuerySnapshot snapshot = db.collection("users").get().get();
         List<User> users = new ArrayList<>();
         for (DocumentSnapshot doc : snapshot.getDocuments()) {
+            // [UC-13] 13.1.10 Ánh xạ từng DocumentSnapshot của Firestore thành model User.
             User user = doc.toObject(User.class);
             if (user != null) {
                 users.add(user);
             }
         }
+        // [UC-13] 13.1.11 Trả danh sách user đã ánh xạ về AdminUserServlet.
         return users;
     }
 
     public List<User> getAllUsers() throws ExecutionException, InterruptedException {
+        // [UC-13] 13.1.6 Ủy thác yêu cầu lấy danh sách người dùng admin cho truy vấn getAll().
         return getAll();
     }
 }

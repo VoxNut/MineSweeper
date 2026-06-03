@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.minesweeper.model.User" %>
 <%
+    // [UC-13] 13.1.14 Đọc request attribute users do AdminUserServlet chuẩn bị để render giao diện.
     List<User> userList = (List<User>) request.getAttribute("users");
     if (userList == null) {
         userList = java.util.Collections.emptyList();
@@ -67,6 +68,7 @@
         </div>
 
         <%
+            // [UC-13] 13.4.1 Đọc uid admin hiện tại và trạng thái lỗi self-block nếu có.
             String currentUid = session != null ? (String) session.getAttribute("uid") : null;
             String error = request.getParameter("error");
         %>
@@ -90,6 +92,7 @@
             </tr>
             </thead>
             <tbody id="users-body">
+            <%-- [UC-13] 13.1.14 / 13.1.16 Render từng user kèm trạng thái và các thao tác Block / Unblock / Set Role. --%>
             <% for (User user : userList) { %>
             <tr data-search="<%= (user.getDisplayName() == null ? "" : user.getDisplayName()) + " " + (user.getEmail() == null ? "" : user.getEmail()) %>">
                 <td>
@@ -110,6 +113,7 @@
                     <% } %>
                 </td>
                 <td>
+                    <%-- [UC-13] 13.2.1 / 13.2.2 Gửi thao tác Block hoặc Unblock cho user được chọn. --%>
                     <form method="post" action="<%= request.getContextPath() %>/admin/users" class="row actions" style="margin:0;">
                         <input type="hidden" name="uid" value="<%= user.getUid() %>">
                         <input type="hidden" name="action" value="<%= user.isBlocked() ? "unblock" : "block" %>">
@@ -119,6 +123,7 @@
                             <button class="btn" type="submit"><%= user.isBlocked() ? "Unblock" : "Block" %></button>
                         <% } %>
                     </form>
+                    <%-- [UC-13] 13.2.1 / 13.2.2 Gửi thao tác Set Role với giá trị role đã chọn. --%>
                     <form method="post" action="<%= request.getContextPath() %>/admin/users" class="row actions" style="margin:8px 0 0;">
                         <input type="hidden" name="uid" value="<%= user.getUid() %>">
                         <input type="hidden" name="action" value="setRole">
