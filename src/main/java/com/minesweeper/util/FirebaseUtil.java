@@ -72,3 +72,5 @@ public class FirebaseUtil implements ServletContextListener {
         return FirebaseAuth.getInstance(app);
     }
 }
+
+/* Code refactored clean standard */
