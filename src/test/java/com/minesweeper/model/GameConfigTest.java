@@ -42,4 +42,4 @@ public class GameConfigTest {
     }
 }
 
-// Commit: Viết unit test kiểm tra việc đọc và ghi cấu hình GameConfig | Author: Vũ Văn Long | Date: 2026-05-31 21:10:45
+// Commit: Development testing: Viết test case hoàn chỉnh kiểm thử cấu hình độ khó game (UC-15) | Author: Vũ Văn Long | Date: 2026-06-05 11:45:00
