@@ -1,0 +1,8 @@
+
+RELEASE TESTING REPORT
+Feature: UC-7 How to Play view
+Tester: Vo Minh Nhut
+Developer: Vu Van Long
+Status: PASSED
+
+# Commit: Release testing: Kiểm thử tích hợp giao diện và kịch bản hướng dẫn chơi UC-7 của Long | Author: Võ Minh Nhựt | Date: 2026-06-05 18:30:00
