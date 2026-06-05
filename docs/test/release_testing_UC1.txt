@@ -1,0 +1,8 @@
+
+RELEASE TESTING REPORT
+Feature: UC-1 Google Login
+Tester: Nguyen Duc Khai
+Developer: Vo Minh Nhut
+Status: PASSED
+
+# Commit: Release testing: Chạy thử nghiệm độc lập và xác nhận UC-1 (Đăng nhập Google) của Nhựt chạy tốt | Author: Nguyễn Đức Khải | Date: 2026-06-05 14:45:00
