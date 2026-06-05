@@ -1,0 +1,8 @@
+
+RELEASE TESTING REPORT
+Feature: UC-4 Forgot Password
+Tester: Vo Minh Nhut
+Developer: Nguyen Duy Khanh
+Status: PASSED
+
+# Commit: Release testing: Kiểm tra quy trình khôi phục mật khẩu UC-4 do Khánh triển khai | Author: Võ Minh Nhựt | Date: 2026-06-05 20:00:00
