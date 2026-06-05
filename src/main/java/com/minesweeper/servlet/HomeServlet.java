@@ -12,5 +12,3 @@ public class HomeServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
     }
 }
-
-// Commit: Tạo trang chủ (home.jsp) và HomeServlet điều hướng ban đầu | Author: Võ Minh Nhựt | Date: 2026-04-13 22:45:10

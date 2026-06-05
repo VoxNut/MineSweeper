@@ -316,5 +316,3 @@ if (resetPasswordBtn) {
 }
 
 setMode("signin");
-
-// Commit: Fix lỗi Firebase auth.js không nhận dạng đúng Google credentials | Author: Võ Minh Nhựt | Date: 2026-04-22 21:55:00

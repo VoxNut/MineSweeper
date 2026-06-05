@@ -72,9 +72,3 @@ public class FirebaseUtil implements ServletContextListener {
         return FirebaseAuth.getInstance(app);
     }
 }
-
-// Commit: Hoàn thiện FirebaseUtil để kết nối Firestore database | Author: Võ Minh Nhựt | Date: 2026-04-11 22:14:28
-
-/* Code refactored clean standard */
-
-// Commit: Nhóm trưởng refactor lại cấu trúc code toàn bộ dự án chuẩn clean code | Author: Võ Minh Nhựt | Date: 2026-06-03 12:14:01

@@ -62,5 +62,3 @@ public class AdminScoreServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/scores");
     }
 }
-
-// Commit: Viết AdminScoreServlet cho phép xem và xóa lịch sử gian lận | Author: Tạ Văn Huy | Date: 2026-05-16 20:35:10

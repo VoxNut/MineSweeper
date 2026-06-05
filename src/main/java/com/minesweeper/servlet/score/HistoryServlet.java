@@ -59,5 +59,3 @@ public class HistoryServlet extends HttpServlet {
         }
     }
 }
-
-// Commit: Viết HistoryServlet lấy danh sách lịch sử chơi của user hiện tại | Author: Nguyễn Đức Khải | Date: 2026-05-09 09:30:15

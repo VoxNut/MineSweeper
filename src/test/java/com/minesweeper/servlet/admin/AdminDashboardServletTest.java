@@ -82,5 +82,3 @@ public class AdminDashboardServletTest {
         }
     }
 }
-
-// Commit: Development testing: Bổ sung các test case kiểm tra hiển thị thống kê biểu đồ Dashboard UC-12 | Author: Nguyễn Duy Khánh | Date: 2026-06-05 14:00:00

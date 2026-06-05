@@ -37,5 +37,3 @@ public class AuthFilterTest {
         verify(chain, never()).doFilter(request, response);
     }
 }
-
-// Commit: Bổ sung unit test cho AuthFilter xác thực quyền truy cập | Author: Nguyễn Duy Khánh | Date: 2026-06-02 20:45:12

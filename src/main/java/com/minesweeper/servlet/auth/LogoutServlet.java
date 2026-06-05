@@ -32,5 +32,3 @@ public class LogoutServlet extends HttpServlet {
         gson.toJson(payload, response.getWriter());
     }
 }
-
-// Commit: Hiện thực chức năng Đăng xuất tài khoản (UC-5) | Author: Võ Minh Nhựt | Date: 2026-05-09 20:45:10

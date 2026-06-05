@@ -20,5 +20,3 @@ if (!firebase.apps.length) {
 
 console.log("firebase.auth available:", typeof firebase.auth);
 export { firebase };
-
-// Commit: Tích hợp đăng nhập Google (UC-1) vào trang đăng nhập và file JS | Author: Võ Minh Nhựt | Date: 2026-04-18 14:15:22

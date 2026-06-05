@@ -12,5 +12,3 @@ public class HowToPlayServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/howtoplay.jsp").forward(request, response);
     }
 }
-
-// Commit: Hiện thực HowToPlayServlet để điều hướng trang hướng dẫn | Author: Vũ Văn Long | Date: 2026-04-28 20:15:33

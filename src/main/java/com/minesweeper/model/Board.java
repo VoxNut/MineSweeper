@@ -67,5 +67,3 @@ public class Board {
         return cells[row][col];
     }
 }
-
-// Commit: Hiện thực thuật toán tạo bảng và phân bố mìn ngẫu nhiên trong Board.java | Author: Nguyễn Đức Khải | Date: 2026-04-25 09:15:00

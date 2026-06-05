@@ -143,4 +143,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-<!-- Commit: Hoàn thành giao diện cấu hình admin/config.jsp | Author: Vũ Văn Long | Date: 2026-05-19 20:45:00 -->

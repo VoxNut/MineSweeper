@@ -36,5 +36,3 @@ public class HomeControllerTest {
         verify(dispatcher, times(1)).forward(request, response);
     }
 }
-
-// Commit: Viết thêm các unit test ban đầu cho HomeController | Author: Võ Minh Nhựt | Date: 2026-05-30 21:05:00

@@ -42,5 +42,3 @@ public class AdminFilter implements Filter {
     public void destroy() {
     }
 }
-
-// Commit: Hoàn thiện AdminFilter ngăn chặn truy cập trái phép trang quản trị | Author: Nguyễn Duy Khánh | Date: 2026-05-22 22:10:00

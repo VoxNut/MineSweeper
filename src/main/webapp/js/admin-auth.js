@@ -50,4 +50,3 @@ async function adminLogin() {
 if (adminLoginBtn) {
     adminLoginBtn.addEventListener("click", adminLogin);
 }
-// Commit: Viết file admin-auth.js kiểm tra quyền và token Admin phía client | Author: Nguyễn Duy Khánh | Date: 2026-05-23 10:15:30

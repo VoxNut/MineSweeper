@@ -155,9 +155,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-
-<!-- Commit: Hoàn thiện nội dung hướng dẫn chơi chi tiết trong howtoplay.jsp | Author: Vũ Văn Long | Date: 2026-04-29 22:05:00 -->
-
-<!-- Step-by-step imagery guide mapping cards -->
-
-<!-- Commit: Cải thiện nội dung trang hướng dẫn chơi, thêm hình ảnh minh họa | Author: Vũ Văn Long | Date: 2026-05-29 20:35:10 -->

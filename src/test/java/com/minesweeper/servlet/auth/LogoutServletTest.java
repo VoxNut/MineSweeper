@@ -60,5 +60,3 @@ public class LogoutServletTest {
         assertTrue(stringWriter.toString().contains("success"));
     }
 }
-
-// Commit: Development testing: Bổ sung các unit test cho UC-9 (Bảng xếp hạng), UC-5 (Đăng xuất), UC-6 (Đăng nhập Admin) | Author: Võ Minh Nhựt | Date: 2026-06-05 10:15:00

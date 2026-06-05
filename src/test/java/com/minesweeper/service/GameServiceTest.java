@@ -26,5 +26,3 @@ public class GameServiceTest {
         }
     }
 }
-
-// Commit: Hoàn thành unit test GameServiceTest đầy đủ kịch bản | Author: Nguyễn Đức Khải | Date: 2026-05-31 15:40:00

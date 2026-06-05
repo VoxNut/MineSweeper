@@ -57,5 +57,3 @@ export function showAlert(message, type = "info", options = {}) {
 
     return alertEl;
 }
-
-// Commit: Tạo file tiện ích ui-alert.js hiển thị thông báo toast đẹp mắt | Author: Võ Minh Nhựt | Date: 2026-05-23 15:40:00

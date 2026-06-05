@@ -342,5 +342,3 @@ public class GameService {
         }
     }
 }
-
-// Commit: Tối ưu hóa GameService: giảm độ trễ khi tạo mìn lần click đầu tiên | Author: Nguyễn Đức Khải | Date: 2026-05-23 20:55:12

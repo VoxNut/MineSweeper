@@ -109,9 +109,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-
-<!-- Commit: Hoàn thành trang scores.jsp quản lý điểm số hoàn hảo | Author: Tạ Văn Huy | Date: 2026-05-17 10:20:00 -->
-
-<!-- Local date conversion logic formatting corrected -->
-
-<!-- Commit: Fix lỗi hiển thị ngày tháng trong bảng scores của admin | Author: Tạ Văn Huy | Date: 2026-06-04 21:55:04 -->

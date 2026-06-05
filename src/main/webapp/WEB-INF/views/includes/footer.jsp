@@ -10,5 +10,3 @@
         <a href="<%= _ctxF %>/howtoplay">How to Play</a>
     </div>
 </footer>
-
-<!-- Commit: Tạo các file layout chung: header, footer và file CSS chính | Author: Võ Minh Nhựt | Date: 2026-04-12 15:20:45 -->

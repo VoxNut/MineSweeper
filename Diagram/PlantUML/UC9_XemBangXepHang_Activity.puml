@@ -1,0 +1,78 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+
+' Clean, minimal monochrome style
+skinparam ActivityBorderColor #000000
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityStartColor #000000
+skinparam ActivityEndColor #000000
+skinparam ArrowColor #000000
+skinparam PartitionBorderColor #000000
+skinparam PartitionBackgroundColor transparent
+skinparam ConditionBorderColor #000000
+skinparam ConditionBackgroundColor #FFFFFF
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+
+title UC-9: Xem bảng xếp hạng (Activity Diagram)
+
+|Người dùng|
+start
+if (Lựa chọn thao tác?) then (Truy cập mặc định)
+    :9.1.1: Điều hướng tới URL /leaderboard\n(Tham số difficulty mặc định là "all");
+else (Lọc theo độ khó [Thay thế 9.2])
+    :9.2.1: Chọn mức độ khó từ dropdown\n(easy/medium/hard/custom) và nhấn "Filter";\n9.2.2: Trình duyệt gửi HTTP GET tới /leaderboard?difficulty={giá_trị};
+endif
+
+|AuthFilter|
+:9.1.2: Kiểm tra đường dẫn và nhận ra /leaderboard là public path;\nCho phép yêu cầu đi qua không yêu cầu xác thực;
+
+|Backend (Servlet & Service)|
+:9.1.3: LeaderboardServlet nhận HTTP GET request\nvà đọc tham số difficulty từ query string;\n9.1.4: Gọi LeaderboardService.getTopScores(difficulty);\n9.1.5: Giao tiếp và ủy thác yêu cầu cho ScoreDAO;
+
+|ScoreDAO|
+:9.1.6: Xây dựng truy vấn Firestore lên collection "scores":\n- Lọc result = "win" (9.1.6.1)\n- Lọc flagged = false (9.1.6.2)\n- Thêm điều kiện lọc difficulty nếu difficulty != "all" (9.1.6.3)\n- Sắp xếp kết quả theo timeSec tăng dần (9.1.6.4)\n- Giới hạn tối đa 20 bản ghi (9.1.6.5);
+
+|Firestore|
+:Thực thi truy vấn Firestore;
+note right
+  **[Ngoại lệ 9.4: Lỗi kết nối Firestore]**
+  Nếu truy vấn Firestore ném exception:
+  - 9.4.1: Ném ExecutionException hoặc InterruptedException
+  - 9.4.2: Servlet bắt exception và ghi log SEVERE
+  - 9.4.3: Trả về HTTP 500 Internal Server Error
+  - 9.4.4: Người dùng nhận được trang báo lỗi từ server
+end note
+
+|ScoreDAO|
+:Nhận kết quả và ánh xạ thành danh sách Score (9.1.7);
+note right
+  **[Thay thế 9.3: Bảng xếp hạng không có dữ liệu]**
+  Nếu không có bản ghi thỏa điều kiện:
+  - 9.3.1: ScoreDAO trả về danh sách rỗng (null hoặc empty)
+  - 9.3.2: leaderboard.jsp nhận danh sách rỗng, không render <tbody>
+  - 9.3.3: Bảng hiển thị rỗng nhưng không có lỗi
+end note
+
+|Backend (Servlet & Service)|
+:9.1.8: Gán danh sách scores và difficulty vào request attributes;\n9.1.9: Forward request tới leaderboard.jsp để render;
+
+|leaderboard.jsp|
+:9.1.10: Hiển thị bảng xếp hạng với các cột:\nRank (#), Player, Difficulty, Time (s), Elo, Played At;
+if (Điểm số eloAfter <= 0?) then (Đúng [9.1.11])
+    :Hiển thị ký tự "-" thay cho giá trị Elo;
+else (Sai)
+    :Hiển thị giá trị điểm Elo bình thường;
+endif
+
+if (Có áp dụng lọc độ khó?) then (Có [9.2])
+    :9.2.4: Hiển thị lại dropdown với giá trị đang được chọn (selected attribute);
+else (Không)
+    :Dropdown giữ trạng thái mặc định;
+endif
+
+|Người dùng|
+:Xem giao diện bảng xếp hạng;
+stop
+@enduml

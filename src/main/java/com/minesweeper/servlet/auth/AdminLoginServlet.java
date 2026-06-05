@@ -13,4 +13,3 @@ public class AdminLoginServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/admin/login.jsp").forward(request, response);
     }
 }
-// Commit: Viết AdminLoginServlet xử lý xác thực tài khoản quản trị | Author: Võ Minh Nhựt | Date: 2026-05-10 15:40:00

@@ -63,5 +63,3 @@ public class UserDAO {
         return getAll();
     }
 }
-
-// Commit: Hoàn thiện logic User và UserDAO để lưu thông tin người dùng | Author: Võ Minh Nhựt | Date: 2026-04-18 20:45:10

@@ -58,5 +58,3 @@ public class AdminSeeder {
         System.exit(0);
     }
 }
-
-// Commit: Tạo AdminSeeder để tự động chèn dữ liệu Admin mặc định ban đầu | Author: Nguyễn Duy Khánh | Date: 2026-05-20 21:50:33

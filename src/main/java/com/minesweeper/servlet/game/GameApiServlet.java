@@ -299,5 +299,3 @@ public class GameApiServlet extends HttpServlet {
         gson.toJson(payload, response.getWriter());
     }
 }
-
-// Commit: Hoàn thiện GameApiServlet để phản hồi trạng thái bảng chơi | Author: Nguyễn Đức Khải | Date: 2026-04-30 20:45:10

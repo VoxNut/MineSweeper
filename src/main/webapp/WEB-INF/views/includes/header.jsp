@@ -63,5 +63,3 @@
         }
     });
 </script>
-
-<!-- Commit: Cập nhật header.jsp và CSS main để hiển thị thanh điều hướng | Author: Võ Minh Nhựt | Date: 2026-04-12 21:05:12 -->

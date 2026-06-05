@@ -32,5 +32,3 @@ export function setVolume(level) {
         audio.volume = clamped;
     });
 }
-
-// Commit: Viết sound.js để phát âm thanh tương ứng khi chơi game | Author: Nguyễn Đức Khải | Date: 2026-05-01 14:40:30

@@ -1,0 +1,65 @@
+Use Case ID
+UC-1
+Use Case Name
+Đăng nhập bằng tài khoản Google
+Description
+Cho phép người dùng xác thực và đăng nhập vào hệ thống trò chơi Minesweeper thông qua tài khoản Google sử dụng Firebase Authentication.
+Actor(s)
+Người dùng
+Priority
+Essential
+Trigger
+Người dùng nhấn vào nút "Sign in with Google" trên màn hình đăng nhập.
+Pre-Condition(s)
+- Thiết bị của người dùng phải có kết nối internet.
+- Người dùng đang truy cập tại giao diện đăng nhập.
+- Dịch vụ Firebase Authentication đang hoạt động bình thường.
+Post-Condition(s)
+- Thành công: Phiên đăng nhập (HttpSession) được tạo, thông tin người dùng được lưu/cập nhật vào Firestore, và hệ thống chuyển hướng vào trang trò chơi (/game).
+- Thất bại: Trạng thái chưa đăng nhập được giữ nguyên, hiển thị thông báo lỗi tương ứng.
+Basic Flow
+1.1 Basic Flow
+1.1.1 Người dùng nhấn nút "Sign in with Google".
+1.1.2 Hệ thống (Frontend) gọi Firebase SDK để mở cửa sổ popup xác thực Google.
+1.1.3 Người dùng chọn một tài khoản Google hợp lệ và đồng ý cấp quyền.
+1.1.4 Firebase SDK nhận thông tin và trả về idToken cho Frontend.
+1.1.5 Frontend gửi request POST chứa idToken lên Backend (/auth/login).
+1.1.6 Backend sử dụng Firebase Admin SDK để xác minh idToken.
+1.1.7 Backend lấy các thông tin uid, email, name, photoURL từ token.
+1.1.8 Backend truy vấn cơ sở dữ liệu (Firestore) để tìm bản ghi User dựa trên uid.
+1.1.9 Hệ thống tạo mới thông tin User (gán role="player", elo=1000, blocked=false).
+1.1.10 Backend lưu (upsert) đối tượng User vào cơ sở dữ liệu Firestore.
+1.1.11 Backend tạo HttpSession và lưu các thuộc tính (uid, displayName, role, photoURL).
+1.1.12 Backend trả về kết quả đăng nhập thành công (HTTP 200 OK).
+1.1.13 Frontend xử lý phản hồi và chuyển hướng người dùng vào trang trò chơi (/game).
+Alternative Flow
+1.2 Tài khoản người dùng đã tồn tại (Thay thế cho bước 1.1.9 trong Basic Flow)
+1.2.1 Backend nhận thấy uid đã tồn tại trong Firestore.
+1.2.2 Backend tiến hành cập nhật thông tin User thay vì tạo mới.
+    1.2.2.1 Cập nhật displayName và photoURL từ Google.
+    1.2.2.2 Cập nhật thời gian đăng nhập cuối cùng (lastLoginAt).
+1.2.3 Luồng tiếp tục tại bước 1.1.10 của Basic Flow.
+Exception Flow
+1.3 Người dùng đóng popup xác thực Google (Tại bước 1.1.3 của Basic Flow)
+1.3.1 Firebase SDK trả về lỗi auth/popup-closed-by-user.
+1.3.2 Frontend hiển thị thông báo lỗi "Login failed".
+1.3.3 Luồng kết thúc.
+
+1.4 idToken không hợp lệ hoặc đã hết hạn (Tại bước 1.1.6 của Basic Flow)
+1.4.1 Firebase Admin SDK ném ra ngoại lệ khi xác minh token.
+1.4.2 Backend bắt lỗi và trả về mã HTTP 500.
+1.4.3 Frontend hiển thị thông báo "Login failed".
+1.4.4 Luồng kết thúc.
+
+1.5 Tài khoản bị Admin khóa (Tại bước 1.1.11 của Basic Flow)
+1.5.1 Hệ thống phát hiện thuộc tính blocked của người dùng là true.
+1.5.2 Backend từ chối tạo Session và trả về HTTP 403 Forbidden.
+1.5.3 Frontend hiển thị thông báo "User is blocked".
+1.5.4 Luồng kết thúc.
+Business Rules
+- BR1: Tài khoản đăng nhập bằng Google lần đầu sẽ được tự động cấp quyền người chơi (role="player") và điểm xếp hạng mặc định (eloRating=1000).
+- BR2: Nếu tài khoản bị đánh dấu là đã khóa (blocked=true), hệ thống tuyệt đối không cho phép tạo phiên làm việc (Session).
+Non-functional Requirements
+- NFR1: Thời gian phản hồi từ lúc Frontend gửi idToken lên Backend đến khi nhận được kết quả phải nằm trong giới hạn cho phép (nhanh chóng) để đảm bảo trải nghiệm người dùng.
+- NFR2: Các thao tác trao đổi idToken phải được mã hóa và bảo mật.
+

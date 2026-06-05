@@ -46,5 +46,3 @@ public class LeaderboardService {
         return scoreDAO.getRecentScores(limit);
     }
 }
-
-// Commit: Viết LeaderboardService và LeaderboardServlet truy xuất điểm cao | Author: Võ Minh Nhựt | Date: 2026-05-05 20:40:15

@@ -115,5 +115,3 @@ public class Score {
         this.eloAfter = eloAfter;
     }
 }
-
-// Commit: Hoàn thiện model Score và hàm lưu điểm trong ScoreDAO | Author: Tạ Văn Huy | Date: 2026-05-03 09:30:15

@@ -120,9 +120,3 @@
 </script>
 </body>
 </html>
-
-<!-- Commit: Thêm giao diện Đăng ký tài khoản (UC-3) trong login.jsp | Author: Võ Minh Nhựt | Date: 2026-04-19 20:10:00 -->
-
-<!-- Injected UI Alert notifications components toast -->
-
-<!-- Commit: Tích hợp ui-alert.js vào các trang login.jsp và register | Author: Võ Minh Nhựt | Date: 2026-05-25 20:30:15 -->

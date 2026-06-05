@@ -12,5 +12,3 @@ public class GameServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/game.jsp").forward(request, response);
     }
 }
-
-// Commit: Tạo trang giao diện chơi game (game.jsp) và GameServlet | Author: Nguyễn Đức Khải | Date: 2026-04-25 21:10:22

@@ -99,5 +99,3 @@ public class GameConfig {
         }
     }
 }
-
-// Commit: Thiết kế model GameConfig và GameConfigDAO để quản lý độ khó (UC-15) | Author: Vũ Văn Long | Date: 2026-05-17 15:45:30

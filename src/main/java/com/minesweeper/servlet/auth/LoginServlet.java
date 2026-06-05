@@ -80,5 +80,3 @@ public class LoginServlet extends HttpServlet {
         gson.toJson(payload, response.getWriter());
     }
 }
-
-// Commit: Hoàn thành xử lý Đăng ký và Đăng nhập trong LoginServlet | Author: Võ Minh Nhựt | Date: 2026-04-21 20:45:12

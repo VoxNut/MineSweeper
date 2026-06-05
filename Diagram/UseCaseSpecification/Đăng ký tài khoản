@@ -1,0 +1,59 @@
+Use Case ID
+UC-3
+Use Case Name
+Đăng ký tài khoản
+Description
+Cho phép người dùng mới tạo một tài khoản trong hệ thống thông qua việc cung cấp Name, Email và Password. Sau khi tạo thành công, hệ thống sẽ tự động đồng bộ phiên làm việc (auto-login).
+Actor(s)
+Người dùng (Khách chưa có tài khoản)
+Priority
+Essential
+Trigger
+Người dùng điền đầy đủ các thông tin (Name, Email, Password, Confirm Password) và nhấn nút Đăng ký (Register).
+Pre-Condition(s)
+- Phải luôn luôn có kết nối internet.
+- Người dùng đang truy cập tại giao diện đăng ký của hệ thống.
+Post-Condition(s)
+- Thành công: Tài khoản mới được tạo trên cả Firebase Auth và cơ sở dữ liệu Firestore. Hệ thống tự động tạo phiên làm việc (HttpSession) và chuyển hướng người dùng vào trang /game.
+- Thất bại: Giữ nguyên form đăng ký và thông báo rõ nguyên nhân lỗi (do người dùng hoặc do máy chủ).
+Basic Flow
+3.1 Basic Flow
+3.1.1 Người dùng nhập thông tin (Name, Email, Password, Confirm Password) và kích hoạt sự kiện Đăng ký.
+3.1.2 Frontend tiến hành validate để đảm bảo các dữ liệu hợp lệ.
+3.1.3 Frontend gọi hàm createUserWithEmailAndPassword của Firebase SDK.
+3.1.4 Firebase Auth xử lý tạo tài khoản thành công và trả về thông tin User ban đầu.
+3.1.5 Frontend tiếp tục gọi Firebase SDK (updateProfile) để cập nhật tên hiển thị (Name) của người dùng.
+3.1.6 Frontend lấy idToken (JWT) từ Firebase SDK sau khi tài khoản đã được cập nhật xong.
+3.1.7 Frontend gửi HTTP POST kèm idToken lên Backend (/auth/login) để đồng bộ phiên đăng nhập.
+3.1.8 Backend dùng Firebase Admin để xác thực tính hợp pháp của idToken.
+3.1.9 Backend kiểm tra sự tồn tại của User qua UserDAO trong Firestore (kết quả trả về null).
+3.1.10 Backend khởi tạo đối tượng User mới (gán mặc định role="player", elo=1000).
+3.1.11 Backend lưu (upsert) đối tượng User vào CSDL Firestore.
+3.1.12 Backend tạo HttpSession chứa các thông tin cá nhân và trả về HTTP 200 OK.
+3.1.13 Frontend nhận kết quả thành công và tự động chuyển hướng người dùng vào trang /game.
+Alternative Flow
+(Không có luồng thay thế đáng kể vì quá trình đăng ký luôn tuân theo chuỗi tuần tự nghiêm ngặt)
+Exception Flow
+3.2 Dữ liệu nhập vào không hợp lệ (Tại bước 3.1.2)
+3.2.1 Frontend phát hiện một trong các lỗi: trường bị bỏ trống, password dưới 8 ký tự, hoặc password xác nhận không khớp.
+3.2.2 Frontend hiển thị dòng cảnh báo lỗi cụ thể ngay dưới ô nhập liệu tương ứng.
+3.2.3 Hệ thống huỷ tiến trình đăng ký.
+
+3.3 Lỗi đăng ký từ Firebase (Tại bước 3.1.4)
+3.3.1 Firebase Auth từ chối tạo tài khoản (Lý do: Email đã tồn tại trong hệ thống, hoặc định dạng email sai).
+3.3.2 Frontend dùng hàm showAlert hiển thị thông báo "Registration failed".
+3.3.3 Hệ thống huỷ tiến trình đăng ký.
+
+3.4 Lỗi đồng bộ Token trên máy chủ (Tại bước 3.1.8)
+3.4.1 Firebase Admin báo lỗi idToken không hợp lệ (do máy chủ mất kết nối hoặc sai lệch thời gian).
+3.4.2 Backend ném ngoại lệ và trả về lỗi 500 Internal Server Error.
+3.4.3 Frontend dùng hàm showAlert hiển thị thông báo "Registration failed".
+3.4.4 Hệ thống huỷ luồng tự động đăng nhập (Tài khoản đã tạo trên Firebase Auth nhưng chưa đồng bộ với Firestore, người dùng sẽ phải đăng nhập lại sau).
+Business Rules
+- BR1: Yêu cầu về bảo mật: Mật khẩu phải có độ dài tối thiểu là 8 ký tự.
+- BR2: Mật khẩu xác nhận (Confirm Password) phải khớp hoàn toàn với Mật khẩu đã nhập.
+- BR3: Mọi người dùng mới được tạo từ giao diện đăng ký sẽ mặc định nhận phân quyền người chơi bình thường (role="player") và mốc điểm xếp hạng cơ sở (elo=1000).
+Non-functional Requirements
+- NFR1 - Performance: Chuỗi hành động từ việc tạo tài khoản, cập nhật tên cho đến quá trình gọi Backend API để tự động thiết lập session phải diễn ra liền mạch, hạn chế tình trạng treo loading screen.
+- NFR2 - Security: Dữ liệu mật khẩu không được gửi dưới dạng thuần (plain-text) tới máy chủ backend của ứng dụng mà chỉ giao tiếp trực tiếp và mã hóa thông qua SDK của Google Firebase.
+

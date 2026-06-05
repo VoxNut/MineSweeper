@@ -84,5 +84,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-
-<!-- Commit: Hoàn thiện giao diện bảng xếp hạng trong leaderboard.jsp | Author: Võ Minh Nhựt | Date: 2026-05-06 21:35:12 -->

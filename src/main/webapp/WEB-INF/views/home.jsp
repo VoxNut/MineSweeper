@@ -128,9 +128,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-
-<!-- Commit: Cập nhật giao diện trang chủ cực đẹp với CSS home hoàn chỉnh | Author: Võ Minh Nhựt | Date: 2026-04-14 20:30:15 -->
-
-<!-- Smooth zoom animations for boxes -->
-
-<!-- Commit: Đồng bộ hóa giao diện trang chủ, thêm hiệu ứng chuyển động nhẹ | Author: Võ Minh Nhựt | Date: 2026-05-27 20:45:12 -->

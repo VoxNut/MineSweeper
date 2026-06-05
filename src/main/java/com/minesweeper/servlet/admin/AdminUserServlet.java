@@ -63,5 +63,3 @@ public class AdminUserServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/users");
     }
 }
-
-// Commit: Viết AdminUserServlet hỗ trợ xem danh sách và khóa/mở khóa tài khoản | Author: Tạ Văn Huy | Date: 2026-05-15 21:55:00

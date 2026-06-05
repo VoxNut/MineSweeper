@@ -41,5 +41,3 @@ public class Cell {
         this.adjacentMines = adjacentMines;
     }
 }
-
-// Commit: Hoàn thiện logic Cell.java: xác định mìn, số lượng mìn xung quanh | Author: Nguyễn Đức Khải | Date: 2026-04-24 21:40:10

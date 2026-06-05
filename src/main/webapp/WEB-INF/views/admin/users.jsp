@@ -180,5 +180,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-
-<!-- Commit: Hoàn thành trang users.jsp tích hợp AJAX cập nhật trạng thái user | Author: Tạ Văn Huy | Date: 2026-05-16 09:30:15 -->

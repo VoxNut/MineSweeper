@@ -128,13 +128,3 @@ public class ScoreDAO {
         return scores;
     }
 }
-
-// Commit: Hoàn thiện model Score và hàm lưu điểm trong ScoreDAO | Author: Tạ Văn Huy | Date: 2026-05-03 09:30:15
-
-/* Added query filters for game level difficulty scores */
-
-// Commit: Thêm chức năng lọc bảng xếp hạng theo độ khó (UC-10) trong ScoreDAO | Author: Tạ Văn Huy | Date: 2026-05-07 22:10:00
-
-/* Index Firestore optimization scores sorting query */
-
-// Commit: Tối ưu hóa các truy vấn Firestore trong ScoreDAO để tăng tốc | Author: Tạ Văn Huy | Date: 2026-05-30 09:30:15

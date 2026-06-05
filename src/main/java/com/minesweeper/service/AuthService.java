@@ -89,5 +89,3 @@ public class AuthService {
         }
     }
 }
-
-// Commit: Viết hàm đăng ký người dùng mới trong AuthService | Author: Võ Minh Nhựt | Date: 2026-04-20 22:15:33

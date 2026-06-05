@@ -128,4 +128,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-<!-- Commit: Hoàn thành giao diện Dashboard với các biểu đồ thống kê đẹp mắt | Author: Nguyễn Duy Khánh | Date: 2026-05-13 22:15:30 -->

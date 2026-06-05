@@ -41,5 +41,3 @@ public class GameConfigTest {
         assertEquals(16, config.getHard().getRows());
     }
 }
-
-// Commit: Development testing: Viết test case hoàn chỉnh kiểm thử cấu hình độ khó game (UC-15) | Author: Vũ Văn Long | Date: 2026-06-05 11:45:00

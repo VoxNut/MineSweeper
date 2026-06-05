@@ -95,5 +95,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-
-<!-- Commit: Hoàn thành giao diện lịch sử chơi history.jsp và hiển thị kết quả | Author: Nguyễn Đức Khải | Date: 2026-05-09 14:15:22 -->

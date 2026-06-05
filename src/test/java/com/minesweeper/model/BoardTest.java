@@ -36,5 +36,3 @@ public class BoardTest {
         }
     }
 }
-
-// Commit: Development testing: Bổ sung unit test kiểm thử trạng thái lưới tọa độ ô và mìn (UC-8) | Author: Nguyễn Đức Khải | Date: 2026-06-05 11:00:00

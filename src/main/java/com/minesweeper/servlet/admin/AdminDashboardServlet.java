@@ -82,5 +82,3 @@ public class AdminDashboardServlet extends HttpServlet {
         }
     }
 }
-
-// Commit: Viết AdminDashboardServlet tính toán số lượng user và lượt chơi | Author: Nguyễn Duy Khánh | Date: 2026-05-12 21:40:00

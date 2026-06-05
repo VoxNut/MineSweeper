@@ -84,5 +84,3 @@ public class AuthFilter implements Filter {
     public void destroy() {
     }
 }
-
-// Commit: Hoàn thiện AuthFilter để kiểm tra trạng thái đăng nhập của người dùng | Author: Nguyễn Duy Khánh | Date: 2026-05-21 20:30:15

@@ -24,5 +24,3 @@ public class UserDAOModelTest {
         assertEquals(1200, user.getEloRating());
     }
 }
-
-// Commit: Development testing: Thêm unit test cho quản lý tài khoản người dùng UC-13 và lưu điểm UC-14 | Author: Tạ Văn Huy | Date: 2026-06-05 13:15:00
