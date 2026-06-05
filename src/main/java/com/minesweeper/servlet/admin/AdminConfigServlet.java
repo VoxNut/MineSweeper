@@ -108,4 +108,3 @@ public class AdminConfigServlet extends HttpServlet {
         }
     }
 }
-/* Fixed minor bug when parsing mines input range limits */

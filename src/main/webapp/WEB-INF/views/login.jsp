@@ -120,5 +120,3 @@
 </script>
 </body>
 </html>
-
-<!-- Injected UI Alert notifications components toast -->

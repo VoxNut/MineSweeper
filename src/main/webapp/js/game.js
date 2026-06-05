@@ -311,7 +311,3 @@ if (overlayNew) {
 
 updateCustomVisibility();
 newGame();
-
-/* Game completion popup status updates */
-
-/* Flag click prevent trigger propagation issue fixed */

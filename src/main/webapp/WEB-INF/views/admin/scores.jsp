@@ -109,5 +109,3 @@
 <jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
-
-<!-- Local date conversion logic formatting corrected -->
