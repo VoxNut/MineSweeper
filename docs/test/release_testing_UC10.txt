@@ -1,0 +1,8 @@
+
+RELEASE TESTING REPORT
+Feature: UC-10 Filter Leaderboard
+Tester: Nguyen Duy Khanh
+Developer: Ta Van Huy
+Status: PASSED
+
+# Commit: Release testing: Thực hiện release testing cho chức năng UC-10 (Lọc bảng xếp hạng) của Huy | Author: Nguyễn Duy Khánh | Date: 2026-06-05 19:15:00
