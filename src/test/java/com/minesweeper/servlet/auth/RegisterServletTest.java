@@ -22,10 +22,10 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit Test – UC-03: Đăng ký tài khoản
+ * Unit Test – UC-3: Đăng ký tài khoản
  * Bảng 6 – kiểm thử luồng đăng ký qua LoginServlet.doPost()
  *
- * Luồng UC-03: Frontend tạo tài khoản Firebase Auth → gọi POST /auth/login
+ * Luồng UC-3: Frontend tạo tài khoản Firebase Auth → gọi POST /auth/login
  * với idToken → Backend (LoginServlet) upsert User vào Firestore → tạo session.
  */
 @ExtendWith(MockitoExtension.class)

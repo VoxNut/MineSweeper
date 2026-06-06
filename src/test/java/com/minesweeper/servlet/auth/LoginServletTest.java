@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit Test – UC-02: Đăng nhập bằng Email và Password
+ * Unit Test – UC-2: Đăng nhập bằng Email và Password
  * Bảng 5 – kiểm thử các kịch bản của LoginServlet.doPost()
  */
 @ExtendWith(MockitoExtension.class)
