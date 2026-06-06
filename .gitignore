@@ -110,4 +110,4 @@ source code/*
 # Generator files
 /generate_git_history.py
 /github accounts.txt
-/generate_revision_history.py
+/generate_revision_history.pysrc/main/resources/serviceAccountKey.json 
