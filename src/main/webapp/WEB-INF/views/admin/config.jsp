@@ -4,6 +4,24 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.cloud.Timestamp" %>
 <%@ page import="com.minesweeper.model.GameConfig" %>
+<%--
+  UC-15: Cấu hình game (Độ khó) - trang Admin.
+
+  - [UC-15][15.1.2] Render giao diện cấu hình admin/config.jsp (GET /admin/config).
+  - [UC-15][15.2.1] Khi dữ liệu không hợp lệ (POST), hiển thị danh sách errors từ request attribute.
+
+  Input:
+  - request.attribute("config"): GameConfig hiện tại (nếu null thì dùng GameConfig.defaultConfig()).
+  - request.attribute("errors"): List<String> lỗi validate (nếu có).
+  - request.attribute("updatedByDisplay"): tên hiển thị Admin (nếu có).
+
+  Output:
+  - Form POST /admin/config gửi các field: {easy|medium|hard}_{rows|cols|mines}.
+
+  Business Rules (hiển thị theo mô tả/validate ở servlet):
+  - [UC-15][BR2] rows: 5..30, cols: 5..50.
+  - [UC-15][BR3] mines < rows*cols - 9.
+--%>
 <%
     GameConfig gameConfig = (GameConfig) request.getAttribute("config");
     if (gameConfig == null) {
@@ -74,6 +92,7 @@
         </div>
 
         <% if (errors != null && !errors.isEmpty()) { %>
+            <%-- [UC-15][15.2.1] Hiển thị danh sách lỗi validate từ servlet. --%>
             <div class="error-box">
                 <% for (String error : errors) { %>
                     <div><%= error %></div>
@@ -81,6 +100,7 @@
             </div>
         <% } %>
 
+        <%-- [UC-15][15.1.3] Form cấu hình độ khó: Admin nhập và submit POST /admin/config. --%>
         <form method="post" action="<%= request.getContextPath() %>/admin/config" class="stack">
             <div class="config-grid">
                 <div class="config-box">
