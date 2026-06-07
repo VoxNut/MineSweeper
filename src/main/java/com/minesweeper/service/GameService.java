@@ -22,6 +22,8 @@ public class GameService {
     private final Random random = new Random();
     private final GameConfigDAO gameConfigDAO = new GameConfigDAO();
 
+    // UC-8 Chơi game
+    // 8.1.3 Khởi tạo bàn chơi: tạo Board rỗng, khởi tạo các ô (chưa đặt mìn)
     public Board createEmptyBoard(int rows, int cols, int mines) {
         Board board = new Board(rows, cols, mines);
         board.setMinesPlaced(false);
@@ -127,6 +129,9 @@ public class GameService {
         return 10;
     }
 
+    // UC-8 Chơi game
+    // 8.1.4 Sinh vị trí mìn: đặt mìn ngẫu nhiên, đảm bảo ô đầu nhấp an toàn
+    // 8.1.5 Khởi tạo trạng thái các ô và tính số mìn lân cận
     public Board generateBoard(int rows, int cols, int mines, int firstClickRow, int firstClickCol) {
         Board board = new Board(rows, cols, mines);
         int safeIndex = firstClickRow * cols + firstClickCol;
@@ -161,6 +166,14 @@ public class GameService {
         return board;
     }
 
+    // UC-8 Chơi game
+    // 8.3.2 Hệ thống kiểm tra trạng thái ô
+    // 8.3.3 Nếu ô đã mở thì bỏ qua
+    // 8.3.4 Nếu ô có cờ thì bỏ qua
+    // 8.3.5 Mở ô được chọn và trả về danh sách cập nhật cho client
+    // 8.3.6 Kiểm tra ô có chứa mìn => kết thúc trận (LOSE)
+    // 8.3.9 Nếu không chứa mìn, thông báo số mìn lân cận
+    // 8.3.12 Kiểm tra điều kiện chiến thắng
     public RevealResult revealCell(Board board, int row, int col) {
         Cell cell = board.getCell(row, col);
         if (cell.isRevealed() || cell.isFlagged()) {
@@ -185,6 +198,8 @@ public class GameService {
         return new RevealResult(status, updates);
     }
 
+    // UC-8 Chơi game
+    // 8.3.10 Nếu ô xung quanh không có mìn, mở đệ quy các ô kề (flood reveal)
     private void floodReveal(Board board, int startRow, int startCol, List<CellUpdate> updates) {
         int rows = board.getRows();
         int cols = board.getCols();
@@ -223,6 +238,8 @@ public class GameService {
         }
     }
 
+    // UC-8 Chơi game
+    // 8.3.9 Tính số mìn lân cận cho ô (được gọi khi khởi tạo hoặc reveal)
     private int countAdjacentMines(Board board, int row, int col) {
         int count = 0;
         for (int dr = -1; dr <= 1; dr++) {
@@ -243,6 +260,8 @@ public class GameService {
         return count;
     }
 
+    // UC-8 Chơi game
+    // 8.3.12 Kiểm tra điều kiện chiến thắng: tất cả ô không phải mìn đã được mở
     public boolean checkWin(Board board) {
         for (int r = 0; r < board.getRows(); r++) {
             for (int c = 0; c < board.getCols(); c++) {

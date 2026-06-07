@@ -62,6 +62,11 @@ public class GameApiServlet extends HttpServlet {
         }
     }
 
+    // UC-8 Chơi game
+    // 8.1.2 Hệ thống nhận yêu cầu tạo trận mới (API action = "new")
+    // 8.1.3 Khởi tạo bàn chơi (tạo Board rỗng, chưa đặt mìn)
+    // 8.1.6 Đặt bộ đếm thời gian về 0 (UI chịu trách nhiệm hiển thị/reset)
+    // 8.2.2 Hệ thống nhận độ khó và thiết lập rows/cols/mines
     private void handleNew(JsonObject body, HttpSession session, HttpServletResponse response) throws IOException {
         String difficulty = getString(body, "difficulty", "easy");
         ServletContext context = session.getServletContext();
@@ -98,6 +103,9 @@ public class GameApiServlet extends HttpServlet {
             return;
         }
 
+        // UC-8 Chơi game
+        // 8.1.4 Sinh vị trí mìn (đảm bảo ô đầu nhấp an toàn)
+        // 8.1.5 Khởi tạo trạng thái các ô (điểm: số mìn lân cận được tính ở server)
         if (!board.isMinesPlaced()) {
             int rows = (int) session.getAttribute("boardRows");
             int cols = (int) session.getAttribute("boardCols");
@@ -140,6 +148,9 @@ public class GameApiServlet extends HttpServlet {
             return;
         }
 
+        // UC-8 Chơi game
+        // 8.4.2 Hệ thống kiểm tra trạng thái ô trước khi cắm cờ
+        // 8.4.3 Nếu ô chưa mở thì cho phép cắm/gỡ cờ
         Cell cell = board.getCell(row, col);
         if (!cell.isRevealed()) {
             cell.setFlagged(!cell.isFlagged());
@@ -159,6 +170,11 @@ public class GameApiServlet extends HttpServlet {
         gson.toJson(payload, response.getWriter());
     }
 
+    // UC-8 Chơi game
+    // 8.5.1 Người chơi chiến thắng → yêu cầu lưu điểm được gửi (action = "save")
+    // 8.5.2 Hệ thống tính điểm (ScoreService.saveScore)
+    // 8.5.3 Thu thập thông tin người chơi từ session (uid, displayName)
+    // 8.5.4 Tạo bản ghi điểm số và 8.5.5 lưu vào cơ sở dữ liệu (Firestore)
     private void handleSave(JsonObject body, HttpSession session, HttpServletResponse response) throws Exception {
         String uid = (String) session.getAttribute("uid");
         if (uid == null) {

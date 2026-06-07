@@ -26,6 +26,12 @@ public class ScoreService {
     private final UserDAO userDAO = new UserDAO();
     private final Firestore db = FirebaseUtil.getFirestore();
 
+    // UC-8 Chơi game
+    // 8.5.1 Người chơi chiến thắng
+    // 8.5.2 Hệ thống tính điểm (Elo tính trong phương thức này)
+    // 8.5.3 Thu thập thông tin người chơi và ván chơi, tạo đối tượng Score
+    // 8.5.4 Tạo bản ghi điểm số và 8.5.5 Lưu vào Firestore qua ScoreDAO
+    // 8.5.6 Cập nhật bảng xếp hạng / Elo của user
     public SaveResult saveScore(String uid, String displayName, Board board, int timeSec, String result, String difficulty)
             throws ExecutionException, InterruptedException {
         Score score = new Score();

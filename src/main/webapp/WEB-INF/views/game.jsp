@@ -21,6 +21,9 @@
 
         <div class="control-block">
             <div class="row">
+                // UC-8 Chơi game
+                // 8.2.1 Người chơi chọn mức độ khó
+                // 8.2.2 Hệ thống nhận độ khó được chọn
                 <label for="difficulty">Difficulty</label>
                 <select id="difficulty">
                     <option value="easy">Easy</option>
@@ -38,10 +41,14 @@
 
         <div class="control-block stat-grid">
             <div class="stat-pill">
+                // UC-8 Chơi game
+                // 8.2.5 Thiết lập số lượng mìn (hiển thị trên UI)
                 <span class="stat-label">Mines</span>
                 <span id="mine-count" class="stat-value">0</span>
             </div>
             <div class="stat-pill">
+                // UC-8 Chơi game
+                // 8.1.6 Đặt bộ đếm thời gian về 0 (hiển thị trên UI)
                 <span class="stat-label">Time</span>
                 <span id="timer" class="stat-value">0</span>
                 <span class="stat-unit">s</span>
@@ -49,6 +56,8 @@
         </div>
 
         <div class="control-actions">
+            // UC-8 Chơi game
+            // 8.1.1 Người chơi nhấn nút "Trò chơi mới"
             <button id="new-game" class="btn primary">New Game</button>
             <a class="btn ghost" href="<%= request.getContextPath() %>/howtoplay">How to Play</a>
         </div>
@@ -70,6 +79,8 @@
                 <span class="meta-pill">Warm up and sweep</span>
             </div>
             <div class="board-frame">
+                // UC-8 Chơi game
+                // 8.1.7 Hiển thị bàn chơi mới
                 <div id="board" class="board"></div>
             </div>
         </div>

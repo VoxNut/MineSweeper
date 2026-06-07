@@ -10,6 +10,8 @@ public class Board {
     public Board() {
     }
 
+    // UC-8 Chơi game
+    // 8.1.5 Khởi tạo trạng thái các ô: tạo mảng ô, mặc định chưa có mìn (mine placement sau này)
     public Board(int rows, int cols, int mineCount) {
         this.rows = rows;
         this.cols = cols;

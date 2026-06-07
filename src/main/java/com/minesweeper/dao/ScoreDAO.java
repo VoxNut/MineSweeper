@@ -24,6 +24,8 @@ public class ScoreDAO {
         this.db = FirebaseUtil.getFirestore();
     }
 
+    // UC-8 Chơi game
+    // 8.5.5 Lưu điểm vào cơ sở dữ liệu (Firestore) — lưu đối tượng Score
     public String addScore(Score score) throws ExecutionException, InterruptedException {
         DocumentReference ref = db.collection("scores").document();
         score.setScoreId(ref.getId());

@@ -40,6 +40,8 @@ async function postGame(payload) {
     return data;
 }
 
+// UC-8 Chơi game
+// 8.1.6 Đặt bộ đếm thời gian về 0 và bắt đầu đếm khi người chơi mở ô đầu tiên
 function startTimer() {
     startTime = Date.now();
     timerId = setInterval(() => {
@@ -55,6 +57,8 @@ function stopTimer() {
     }
 }
 
+// UC-8 Chơi game
+// 8.1.6 Đặt bộ đếm thời gian về 0 (khi bắt đầu ván mới)
 function resetTimer() {
     stopTimer();
     timerEl.textContent = "0";
@@ -83,6 +87,11 @@ function updateCustomVisibility() {
     customFields.style.display = isCustom ? "flex" : "none";
 }
 
+// UC-8 Chơi game
+// 8.2.2 Hệ thống nhận độ khó được chọn
+// 8.2.3 Thiết lập số hàng
+// 8.2.4 Thiết lập số cột
+// 8.2.5 Thiết lập số lượng mìn
 function getConfig() {
     const difficulty = difficultySelect.value;
     if (difficulty === "custom") {
@@ -96,6 +105,9 @@ function getConfig() {
     return { difficulty };
 }
 
+// UC-8 Chơi game
+// 8.1.3 Khởi tạo bàn chơi (UI: tạo phần tử ô trên giao diện)
+// 8.1.7 Hiển thị bàn chơi mới
 function renderBoard(board) {
     boardEl.innerHTML = "";
     boardEl.style.setProperty("--cols", board.cols);
@@ -174,6 +186,19 @@ function applyFullBoard(board) {
     }
 }
 
+// UC-8 Chơi game
+// 8.3.1 Người chơi nhấn chuột trái vào ô
+// 8.3.2 Hệ thống kiểm tra trạng thái ô
+// 8.3.3 Nếu ô đã mở thì bỏ qua
+// 8.3.4 Nếu ô có cờ thì bỏ qua
+// 8.3.5 Mở ô được chọn (gửi yêu cầu reveal tới server)
+// 8.3.6 Kiểm tra ô có chứa mìn (server trả về status)
+// 8.3.7 Nếu chứa mìn thì kết thúc trận
+// 8.3.8 Hiển thị toàn bộ mìn
+// 8.3.9 Nếu không chứa mìn thì tính số mìn lân cận (server tính)
+// 8.3.10 Nếu số mìn lân cận bằng 0 thì mở đệ quy các ô kề (server flood reveal)
+// 8.3.11 Cập nhật giao diện
+// 8.3.12 Kiểm tra điều kiện chiến thắng
 async function handleReveal(row, col) {
     if (gameOver) {
         return;
@@ -231,6 +256,14 @@ async function handleReveal(row, col) {
     }
 }
 
+// UC-8 Chơi game
+// 8.4.1 Người chơi nhấn chuột phải vào ô
+// 8.4.2 Hệ thống kiểm tra trạng thái ô
+// 8.4.3 Nếu ô chưa mở thì cho phép cắm cờ
+// 8.4.4 Đánh dấu cờ lên ô (gửi yêu cầu flag tới server)
+// 8.4.5 Cập nhật số lượng cờ còn lại
+// 8.4.6 Nếu ô đã có cờ thì gỡ cờ
+// 8.4.7 Cập nhật giao diện
 async function handleFlag(row, col) {
     if (gameOver || !started) {
         return;
@@ -264,6 +297,14 @@ async function handleFlag(row, col) {
     }
 }
 
+// UC-8 Chơi game
+// 8.5.1 Người chơi chiến thắng (hoặc thua) → hệ thống có thể lưu điểm khi có kết quả hoàn tất
+// 8.5.2 Hệ thống tính điểm (server side: ScoreService)
+// 8.5.3 Thu thập thông tin người chơi (uid, displayName được giữ trong session)
+// 8.5.4 Tạo bản ghi điểm số (server side)
+// 8.5.5 Lưu điểm vào file hoặc cơ sở dữ liệu (DAO lưu vào Firestore)
+// 8.5.6 Cập nhật bảng xếp hạng (Leaderboard sẽ đọc từ DB khi cần)
+// 8.5.7 Hiển thị kết quả (hiển thị Elo change trên UI)
 async function saveScore() {
     try {
         const timeSec = parseInt(timerEl.textContent, 10);
