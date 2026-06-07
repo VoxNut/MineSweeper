@@ -1,0 +1,64 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+skinparam style strictuml
+
+' Clean, minimal monochrome style
+skinparam classBorderColor #000000
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam ArrowColor #000000
+skinparam AttributeIconSize 0
+
+title Minesweeper Project - Entity Relationship Diagram (ERD)
+
+entity "users" as User {
+  * uid : String <<PK>>
+  --
+  email : String
+  displayName : String
+  photoURL : String
+  role : String
+  isBlocked : Boolean
+  eloRating : Integer
+  createdAt : Timestamp
+  lastLoginAt : Timestamp
+}
+
+entity "scores" as Score {
+  * scoreId : String <<PK>>
+  --
+  * uid : String <<FK>>
+  displayName : String
+  difficulty : String
+  timeSec : Integer
+  result : String
+  boardRows : Integer
+  boardCols : Integer
+  mineCount : Integer
+  playedAt : Timestamp
+  isFlagged : Boolean
+  eloAfter : Integer
+}
+
+entity "gameConfig" as GameConfig {
+  * documentId = "default" <<PK>>
+  --
+  easy : DifficultyConfig
+  medium : DifficultyConfig
+  hard : DifficultyConfig
+  updatedAt : Timestamp
+  updatedBy : String <<FK>>
+}
+
+class "DifficultyConfig" as DiffConfig <<(V,#FFFFFF) Value Object>> {
+  rows : Integer
+  cols : Integer
+  mines : Integer
+}
+
+User "1" -- "0..*" Score : "has played"
+User "1" -- "0..*" GameConfig : "configures"
+GameConfig *-- "3" DiffConfig : "contains"
+
+@enduml

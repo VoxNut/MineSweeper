@@ -43,15 +43,25 @@
     document.addEventListener("DOMContentLoaded", function() {
         const logoutBtn = document.getElementById("logout-btn");
         if (logoutBtn) {
+            // [UC-05] 5.1.1 Người dùng nhấn nút "Logout" trên thanh điều hướng.
+            // [UC-05] 5.1.2 Frontend thực thi sự kiện JavaScript onClick tương ứng.
             logoutBtn.addEventListener("click", async () => {
                 try {
+                    // [UC-05] 5.1.3 Frontend gửi request dạng HTTP POST đến endpoint API /auth/logout.
                     await fetch("<%= _ctx %>/auth/logout", { method: "POST" });
+                    // [UC-05] 5.1.7 Frontend tiếp nhận kết quả báo thành công.
+                    // [UC-05] 5.1.8 / 5.1.9 Frontend chuyển hướng (redirect) về URL /login.
                     window.location.href = "<%= _ctx %>/login";
                 } catch (err) {
+                    // [UC-05] 5.3.1 Request API tới /auth/logout bị nghẽn (mạng lỗi, server tắt).
+                    // [UC-05] 5.3.2 Frontend bắt lỗi (exception) trong khối catch.
                     console.error("Logout failed:", err);
+                    // [UC-05] 5.3.3 Frontend in lỗi ra console hoặc gọi alert.
                     alert("Logout failed");
                 }
             });
         }
     });
 </script>
+
+<!-- Commit: Sao lưu toàn bộ file mã nguồn chính (thư mục source code) dự phòng | Author: Võ Minh Nhựt | Date: 2026-06-05 23:30:00 -->

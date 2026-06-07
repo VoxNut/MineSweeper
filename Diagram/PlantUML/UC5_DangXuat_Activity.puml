@@ -1,0 +1,53 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+
+' Clean, minimal monochrome style
+skinparam ActivityBorderColor #000000
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityStartColor #000000
+skinparam ActivityEndColor #000000
+skinparam ArrowColor #000000
+skinparam PartitionBorderColor #000000
+skinparam PartitionBackgroundColor transparent
+skinparam ConditionBorderColor #000000
+skinparam ConditionBackgroundColor #FFFFFF
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+
+title UC-5: Đăng xuất (Activity Diagram)
+
+|Người dùng|
+start
+:5.1.1: Nhấn nút "Logout" trên thanh điều hướng;
+
+|Frontend|
+:5.1.2: Thực thi sự kiện JavaScript onClick;\n5.1.3: Gửi request dạng HTTP POST đến endpoint API /auth/logout;
+note right
+  **[Ngoại lệ 5.3: Lỗi kết nối mạng]**
+  Nếu mất kết nối mạng / server sập:
+  - 5.3.1: Request bị nghẽn
+  - 5.3.2: Frontend bắt lỗi trong catch block
+  - 5.3.3: In log/alert, cố gắng force redirect
+  - 5.1.8: Chuyển hướng người dùng về trang Đăng nhập (/login)
+end note
+
+|Backend|
+:5.1.4: Tiếp nhận yêu cầu và truy xuất HttpSession hiện tại;
+note right
+  **[Ngoại lệ 5.2: Không có session]**
+  Nếu session đã hết hạn trước đó (session == null):
+  - 5.2.1: Gọi lấy session nhưng nhận về null
+  - 5.2.2: Chủ động bỏ qua lệnh hủy session
+  - 5.2.3: Tiếp tục trả về HTTP 200 OK để client redirect
+end note
+
+:5.1.5: Gọi hàm session.invalidate() để xóa dữ liệu phiên;\n5.1.6: Phản hồi JSON {"success": true} kèm mã HTTP 200 OK;
+
+|Frontend|
+:5.1.7: Tiếp nhận kết quả báo thành công;\n5.1.8: Ra lệnh cho trình duyệt chuyển hướng về URL /login;
+
+|Người dùng|
+:5.1.9: Trình duyệt tải lại và hiển thị giao diện trang Đăng nhập;
+stop
+@enduml

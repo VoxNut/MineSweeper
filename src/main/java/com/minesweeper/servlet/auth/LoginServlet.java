@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class LoginServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     private final Gson gson = new Gson();
-    private final AuthService authService = new AuthService();
+    AuthService authService = new AuthService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

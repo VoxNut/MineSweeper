@@ -1,0 +1,79 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+
+' Clean, minimal monochrome style
+skinparam ActivityBorderColor #000000
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityStartColor #000000
+skinparam ActivityEndColor #000000
+skinparam ArrowColor #000000
+skinparam PartitionBorderColor #000000
+skinparam PartitionBackgroundColor transparent
+skinparam ConditionBorderColor #000000
+skinparam ConditionBackgroundColor #FFFFFF
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+
+title UC-3: Đăng ký tài khoản (Activity Diagram)
+
+|Người dùng|
+start
+:3.1.1: Nhập thông tin (Name, Email, Password, Confirm Password);\nKích hoạt sự kiện Đăng ký;
+
+|Frontend|
+:3.1.2: Tiến hành validate dữ liệu hợp lệ;
+note right
+  **[Ngoại lệ 3.2: Dữ liệu không hợp lệ]**
+  Nếu phát hiện lỗi nhập liệu ở Client:
+  - 3.2.1: Phát hiện trường rỗng, password < 8 ký tự, confirm mismatch
+  - 3.2.2: Hiển thị dòng cảnh báo tương ứng dưới ô nhập
+  - 3.2.3: Hủy tiến trình đăng ký
+end note
+
+:3.1.3: Gọi createUserWithEmailAndPassword của Firebase SDK;
+
+|Firebase Auth|
+:Xử lý tạo tài khoản mới;
+note right
+  **[Ngoại lệ 3.3: Lỗi từ Firebase Auth]**
+  Nếu Firebase Auth từ chối tạo tài khoản:
+  - 3.3.1: Email đã tồn tại hoặc sai định dạng email
+  - 3.3.2: Frontend hiển thị thông báo "Registration failed"
+  - 3.3.3: Hủy tiến trình đăng ký
+end note
+
+:3.1.4: Tạo tài khoản thành công, trả về UserInfo ban đầu;
+
+|Frontend|
+:3.1.5: Gọi updateProfile để cập nhật tên hiển thị (Name);\n3.1.6: Lấy idToken (JWT) từ Firebase SDK;\n3.1.7: Gửi HTTP POST kèm idToken lên Backend (/auth/login);
+
+|Backend|
+:3.1.8: Sử dụng Firebase Admin để xác thực tính hợp pháp của idToken;
+note right
+  **[Ngoại lệ 3.4: Lỗi đồng bộ Token]**
+  Nếu xác thực token thất bại:
+  - 3.4.1: Firebase Admin báo lỗi token không hợp lệ
+  - 3.4.2: Backend trả về mã HTTP 500 Internal Server Error
+  - 3.4.3: Frontend hiển thị thông báo "Registration failed"
+  - 3.4.4: Hủy luồng tự động đăng nhập (phải đăng nhập lại sau)
+end note
+
+:3.1.9: Kiểm tra sự tồn tại của User trong Firestore bằng UserDAO;
+
+|Firestore|
+:Thực hiện truy vấn (kết quả trả về null - chưa tồn tại);
+
+|Backend|
+:3.1.10: Khởi tạo đối tượng User mới (role="player", elo=1000);\n3.1.11: Lưu (upsert) đối tượng User vào CSDL Firestore;
+
+|Firestore|
+:Ghi nhận và lưu trữ thông tin User;
+
+|Backend|
+:3.1.12: Tạo HttpSession chứa thông tin cá nhân và trả về HTTP 200 OK;
+
+|Frontend|
+:3.1.13: Tự động chuyển hướng người dùng vào trang trò chơi (/game);
+stop
+@enduml

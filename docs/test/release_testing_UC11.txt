@@ -1,0 +1,8 @@
+
+RELEASE TESTING REPORT
+Feature: UC-11 Match History view
+Tester: Vu Van Long
+Developer: Nguyen Duc Khai
+Status: PASSED
+
+# Commit: Release testing: Hỗ trợ kiểm thử chéo và xác minh UC-11 (Xem lịch sử chơi) của Khải | Author: Vũ Văn Long | Date: 2026-06-05 17:00:00
