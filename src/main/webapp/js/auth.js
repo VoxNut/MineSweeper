@@ -236,6 +236,14 @@ async function emailRegister() {
     }
 }
 
+/**
+ * UC-04: Quên mật khẩu
+ * Actor: Người dùng
+ * Mô tả:
+ * - Nhập email
+ * - Gửi yêu cầu reset password tới Firebase
+ * - Firebase gửi email đặt lại mật khẩu
+ */
 async function sendPasswordReset() {
     try {
         // [UC-04] 4.1.1 Người dùng nhập Email và kích hoạt sự kiện gửi yêu cầu đặt lại mật khẩu.
