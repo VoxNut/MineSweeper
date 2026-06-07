@@ -1,20 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%-- 
-  UC-7: Xem hướng dẫn chơi (How to Play)
-
-  - [UC-7][7.1.1] Người dùng truy cập GET /howtoplay.
-  - [UC-7][7.1.2] Hệ thống render trang hướng dẫn (JSP này).
-
-  Input:
-  - session.displayName (nếu có): dùng để xác định trạng thái đăng nhập.
-
-  Output:
-  - Nếu đã đăng nhập: hiển thị nút điều hướng chính (CTA) "Start Playing" -> /game
-  - Nếu chưa đăng nhập: hiển thị nút điều hướng chính (CTA) "Login to Play" -> /login
-
-  Ghi chú liên quan UC-15:
-  - UC-15 cho phép Admin cấu hình độ khó. Bảng Difficulty Levels trong trang này đang hiển thị theo giá trị mặc định.
---%>
 <%
     String displayName = null;
     if (session != null) {
@@ -159,10 +143,8 @@
 
         <div class="htp-cta">
             <% if (loggedIn) { %>
-            <%-- [UC-7][7.1.2] User đã đăng nhập: nút điều hướng chính dẫn tới /game. --%>
             <a href="<%= ctx %>/game" class="btn primary btn-lg">Start Playing</a>
             <% } else { %>
-            <%-- [UC-7][7.1.2] User chưa đăng nhập: nút điều hướng chính dẫn tới /login. --%>
             <a href="<%= ctx %>/login" class="btn primary btn-lg">Login to Play</a>
             <% } %>
             <a href="<%= ctx %>/home" class="btn ghost btn-lg">Back to Home</a>

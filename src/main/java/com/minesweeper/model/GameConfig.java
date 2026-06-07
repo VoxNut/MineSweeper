@@ -2,16 +2,6 @@ package com.minesweeper.model;
 
 import com.google.cloud.Timestamp;
 
-/**
- * Model cấu hình game cho UC-15: Cấu hình game (Độ khó).
- *
- * Thuộc tính chính:
- * - easy/medium/hard: DifficultyConfig (rows/cols/mines)
- * - updatedAt/updatedBy: metadata cho lần cập nhật gần nhất
- *
- * Fallback:
- * - defaultConfig(): cấu hình mặc định dùng khi chưa có dữ liệu trong DB.
- */
 public class GameConfig {
     private DifficultyConfig easy;
     private DifficultyConfig medium;
@@ -63,8 +53,6 @@ public class GameConfig {
     }
 
     public static GameConfig defaultConfig() {
-        // Default theo Minesweeper cổ điển:
-        // Easy: 9x9/10, Medium: 16x16/40, Hard: 16x30/99
         GameConfig config = new GameConfig();
         config.setEasy(new DifficultyConfig(9, 9, 10));
         config.setMedium(new DifficultyConfig(16, 16, 40));
@@ -77,13 +65,6 @@ public class GameConfig {
         private int cols;
         private int mines;
 
-        /**
-         * Cấu hình cho một mức độ khó.
-         *
-         * rows: số hàng
-         * cols: số cột
-         * mines: số mìn
-         */
         public DifficultyConfig() {
         }
 
