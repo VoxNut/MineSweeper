@@ -89,16 +89,28 @@ Dưới đây là bảng lịch sử commit chi tiết của dự án **MineSwee
 | 83 | 29/05/2026 20:35:10 | Vũ Văn Long | Cải thiện nội dung trang hướng dẫn chơi, thêm hình ảnh minh họa | `src/main/webapp/WEB-INF/views/howtoplay.jsp` |
 | 84 | 30/05/2026 09:30:15 | Tạ Văn Huy | Tối ưu hóa các truy vấn Firestore trong ScoreDAO để tăng tốc | `src/main/java/com/minesweeper/dao/ScoreDAO.java` |
 | 85 | 30/05/2026 15:10:45 | Nguyễn Đức Khải | Sửa lỗi cắm cờ vẫn kích hoạt loang ô khi click đúp nhanh | `src/main/webapp/js/game.js` |
-| 86 | 30/05/2026 21:05:00 | Võ Minh Nhựt | Viết thêm các unit test ban đầu cho HomeController | `src/test/java/HomeControllerTest.java` |
-| 87 | 31/05/2026 10:15:30 | Nguyễn Đức Khải | Viết unit test cho GameService kiểm tra logic rải mìn | `src/test/java/GameServiceTest.java` |
-| 88 | 31/05/2026 15:40:00 | Nguyễn Đức Khải | Hoàn thành unit test GameServiceTest đầy đủ kịch bản | `src/test/java/GameServiceTest.java` |
-| 89 | 31/05/2026 21:10:45 | Vũ Văn Long | Viết unit test kiểm tra việc đọc và ghi cấu hình GameConfig | `src/test/java/GameConfigTest.java` |
-| 90 | 01/06/2026 22:15:30 | Tạ Văn Huy | Viết unit test cho ScoreService đảm bảo tính điểm chính xác | `src/test/java/ScoreServiceTest.java` |
-| 91 | 02/06/2026 20:45:12 | Nguyễn Duy Khánh | Bổ sung unit test cho AuthFilter xác thực quyền truy cập | `src/test/java/AuthFilterTest.java` |
+| 86 | 30/05/2026 21:05:00 | Võ Minh Nhựt | Viết thêm các unit test ban đầu cho HomeController | `src/test/java/com/minesweeper/servlet/HomeControllerTest.java` |
+| 87 | 31/05/2026 10:15:30 | Nguyễn Đức Khải | Viết unit test cho GameService kiểm tra logic rải mìn | `src/test/java/com/minesweeper/service/GameServiceTest.java` |
+| 88 | 31/05/2026 15:40:00 | Nguyễn Đức Khải | Hoàn thành unit test GameServiceTest đầy đủ kịch bản | `src/test/java/com/minesweeper/service/GameServiceTest.java` |
+| 89 | 31/05/2026 21:10:45 | Vũ Văn Long | Viết unit test kiểm tra việc đọc và ghi cấu hình GameConfig | `src/test/java/com/minesweeper/model/GameConfigTest.java` |
+| 90 | 01/06/2026 22:15:30 | Tạ Văn Huy | Viết unit test cho ScoreService đảm bảo tính điểm chính xác | `src/test/java/com/minesweeper/model/ScoreServiceTest.java` |
+| 91 | 02/06/2026 20:45:12 | Nguyễn Duy Khánh | Bổ sung unit test cho AuthFilter xác thực quyền truy cập | `src/test/java/com/minesweeper/filter/AuthFilterTest.java` |
 | 92 | 03/06/2026 12:14:01 | Võ Minh Nhựt | Nhóm trưởng refactor lại cấu trúc code toàn bộ dự án chuẩn clean code | `src/main/java/com/minesweeper/util/FirebaseUtil.java` |
 | 93 | 03/06/2026 22:22:19 | Nguyễn Đức Khải | Sửa giao diện bảng chơi game trên thiết bị di động | `src/main/webapp/css/game.css` |
 | 94 | 04/06/2026 21:55:04 | Tạ Văn Huy | Fix lỗi hiển thị ngày tháng trong bảng scores của admin | `src/main/webapp/WEB-INF/views/admin/scores.jsp` |
-| 95 | 05/06/2026 10:01:07 | Võ Minh Nhựt | Chuẩn bị báo cáo cuối kỳ và làm sạch các file log dư thừa | `README.md` |
-| 96 | 05/06/2026 23:25:43 | Võ Minh Nhựt | Đóng gói phiên bản hoàn chỉnh của ứng dụng Minesweeper và lưu trữ | `pom.xml` |
-| 97 | 05/06/2026 23:30:00 | Võ Minh Nhựt | Sao lưu toàn bộ file mã nguồn chính (thư mục source code) dự phòng | `source code/AdminFilter.java, source code/AdminLoginServlet.java, source code/AuthFilter.java, source code/AuthService.java (+10 files)` |
-| 98 | 05/06/2026 23:45:00 | Võ Minh Nhựt | Final sync and project release packaging verification | `README.md, generate_git_history.py, github accounts.txt, pom.xml (+17 files)` |
+| 95 | 05/06/2026 09:15:00 | Võ Minh Nhựt | Chuẩn bị báo cáo cuối kỳ và làm sạch các file log dư thừa | `README.md` |
+| 96 | 05/06/2026 10:15:00 | Võ Minh Nhựt | Development testing: Bổ sung các unit test cho UC-9 (Bảng xếp hạng), UC-5 (Đăng xuất), UC-6 (Đăng nhập Admin) | `src/test/java/com/minesweeper/servlet/auth/AdminLoginServletTest.java, src/test/java/com/minesweeper/servlet/auth/LogoutServletTest.java, src/test/java/com/minesweeper/servlet/score/LeaderboardServletTest.java` |
+| 97 | 05/06/2026 11:00:00 | Nguyễn Đức Khải | Development testing: Bổ sung unit test kiểm thử trạng thái lưới tọa độ ô và mìn (UC-8) | `src/test/java/com/minesweeper/model/BoardTest.java` |
+| 98 | 05/06/2026 11:45:00 | Vũ Văn Long | Development testing: Viết test case hoàn chỉnh kiểm thử cấu hình độ khó game (UC-15) | `src/test/java/com/minesweeper/model/GameConfigTest.java` |
+| 99 | 05/06/2026 13:15:00 | Tạ Văn Huy | Development testing: Thêm unit test cho quản lý tài khoản người dùng UC-13 và lưu điểm UC-14 | `src/test/java/com/minesweeper/model/ScoreServiceTest.java, src/test/java/com/minesweeper/model/UserDAOModelTest.java` |
+| 100 | 05/06/2026 14:00:00 | Nguyễn Duy Khánh | Development testing: Bổ sung các test case kiểm tra hiển thị thống kê biểu đồ Dashboard UC-12 | `src/test/java/com/minesweeper/servlet/admin/AdminDashboardServletTest.java` |
+| 101 | 05/06/2026 14:45:00 | Nguyễn Đức Khải | Release testing: Chạy thử nghiệm độc lập và xác nhận UC-1 (Đăng nhập Google) của Nhựt chạy tốt | `docs/test/release_testing_UC1.txt` |
+| 102 | 05/06/2026 15:30:00 | Tạ Văn Huy | Release testing: Thực hiện kiểm thử độc lập cho UC-2 (Đăng nhập Email/Password) của Nhựt | `docs/test/release_testing_UC2.txt` |
+| 103 | 05/06/2026 16:15:00 | Nguyễn Duy Khánh | Release testing: Chạy test case kiểm tra logic đăng ký tài khoản mới UC-3 của Nhựt | `docs/test/release_testing_UC3.txt` |
+| 104 | 05/06/2026 17:00:00 | Vũ Văn Long | Release testing: Hỗ trợ kiểm thử chéo và xác minh UC-11 (Xem lịch sử chơi) của Khải | `docs/test/release_testing_UC11.txt` |
+| 105 | 05/06/2026 18:30:00 | Võ Minh Nhựt | Release testing: Kiểm thử tích hợp giao diện và kịch bản hướng dẫn chơi UC-7 của Long | `docs/test/release_testing_UC7.txt` |
+| 106 | 05/06/2026 19:15:00 | Nguyễn Duy Khánh | Release testing: Thực hiện release testing cho chức năng UC-10 (Lọc bảng xếp hạng) của Huy | `docs/test/release_testing_UC10.txt` |
+| 107 | 05/06/2026 20:00:00 | Võ Minh Nhựt | Release testing: Kiểm tra quy trình khôi phục mật khẩu UC-4 do Khánh triển khai | `docs/test/release_testing_UC4.txt` |
+| 108 | 05/06/2026 23:25:43 | Võ Minh Nhựt | Đóng gói phiên bản hoàn chỉnh của ứng dụng Minesweeper và lưu trữ | `pom.xml` |
+| 109 | 05/06/2026 23:30:00 | Võ Minh Nhựt | Sao lưu toàn bộ file mã nguồn chính (thư mục source code) dự phòng | `source code/AdminFilter.java, source code/AdminLoginServlet.java, source code/AuthFilter.java, source code/AuthService.java (+10 files)` |
+| 110 | 05/06/2026 23:45:00 | Võ Minh Nhựt | Final sync and project release packaging verification | `.gitignore, Diagram/PlantUML/ERD.puml, Diagram/PlantUML/ERD_Mermaid.md, Diagram/PlantUML/UC1_DangNhapGoogle_Activity.puml (+83 files)` |

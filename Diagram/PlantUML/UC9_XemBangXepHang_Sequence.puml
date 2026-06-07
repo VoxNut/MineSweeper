@@ -1,0 +1,139 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+skinparam style strictuml
+
+' Clean, minimal monochrome style
+skinparam ArrowColor #000000
+skinparam ActorBorderColor #000000
+skinparam ActorBackgroundColor #FFFFFF
+skinparam LifeLineBorderColor #000000
+skinparam LifeLineBackgroundColor #FFFFFF
+skinparam ParticipantBorderColor #000000
+skinparam ParticipantBackgroundColor #FFFFFF
+skinparam BoxBorderColor #000000
+skinparam BoxBackgroundColor transparent
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+skinparam GroupBorderColor #000000
+skinparam GroupBackgroundColor transparent
+skinparam GroupHeaderBackgroundColor #FFFFFF
+
+title UC-9: Xem bảng xếp hạng (Sequence Diagram)
+
+box "Client / Frontend"
+actor "Người dùng\n(Guest/Player/Admin)" as User
+participant "Trình duyệt\n(leaderboard.jsp)" as JSP
+end box
+
+box "Server / Backend"
+participant "AuthFilter" as Filter
+participant "LeaderboardServlet" as Servlet
+participant "LeaderboardService" as Service
+participant "ScoreDAO" as DAO
+database "Firestore" as DB
+end box
+
+autonumber stop
+
+== 9.1 Basic Flow: Xem bảng xếp hạng (Mặc định) ==
+
+User -> Filter : 9.1.1: Truy cập URL /leaderboard (difficulty="all")
+activate Filter
+
+Filter -> Filter : 9.1.2: Xác nhận /leaderboard là public path\n(Không yêu cầu xác thực)
+Filter -> Servlet : Chuyển tiếp yêu cầu (HTTP GET)
+deactivate Filter
+activate Servlet
+
+Servlet -> Servlet : 9.1.3: Đọc tham số difficulty từ query string
+
+Servlet -> Service : 9.1.4: Gọi getTopScores(difficulty)
+activate Service
+
+Service -> DAO : 9.1.5: Gọi getTopScores(difficulty, 20)
+activate DAO
+
+DAO -> DB : 9.1.6: Thực hiện truy vấn Firestore collection "scores"
+activate DB
+note over DAO, DB
+    Xây dựng truy vấn (BR1, BR2, BR3, BR4):
+    - result = "win" (9.1.6.1)
+    - flagged = false (9.1.6.2)
+    - difficulty = "all" (bỏ qua lọc difficulty) (9.1.6.3)
+    - Sắp xếp: timeSec tăng dần (9.1.6.4)
+    - Giới hạn: tối đa 20 bản ghi (9.1.6.5)
+end note
+
+alt 9.4 Luồng ngoại lệ: Lỗi kết nối Firestore
+    DB --> DAO : 9.4.1: Ném ExecutionException / InterruptedException
+    deactivate DB
+    DAO --> Service : Báo lỗi truy vấn
+    deactivate DAO
+    Service --> Servlet : Báo lỗi dịch vụ
+    deactivate Service
+    Servlet -> Servlet : 9.4.2: Bắt exception và ghi log SEVERE
+    Servlet --> User : 9.4.3: Trả về HTTP 500 Internal Server Error
+    note over User : 9.4.4: Người dùng nhận được trang báo lỗi từ server
+else Truy vấn thành công
+    activate DAO
+    activate Service
+    activate DB
+    DB --> DAO : Trả về dữ liệu scores
+    deactivate DB
+
+    alt 9.3 Luồng thay thế: Bảng xếp hạng không có dữ liệu
+        DAO --> Service : 9.3.1: Trả về danh sách rỗng (null/empty)
+        Service --> Servlet : Trả về danh sách rỗng
+        Servlet -> Servlet : 9.1.8: Gán danh sách rỗng & difficulty vào request
+        Servlet -> JSP : 9.1.9: Forward request tới leaderboard.jsp
+        activate JSP
+        JSP -> JSP : 9.3.2: Không render bất kỳ hàng nào trong <tbody>
+        JSP --> User : 9.3.3: Hiển thị bảng rỗng nhưng không có lỗi
+        deactivate JSP
+    else Có dữ liệu bảng xếp hạng
+        DAO -> DAO : 9.1.7: Ánh xạ kết quả thành danh sách Score
+        DAO --> Service : Trả về List<Score>
+        deactivate DAO
+
+        Service --> Servlet : Trả về List<Score>
+        deactivate Service
+
+        Servlet -> Servlet : 9.1.8: Gán danh sách scores và difficulty vào request attributes
+        Servlet -> JSP : 9.1.9: Forward request tới leaderboard.jsp để render
+        activate JSP
+
+        JSP -> JSP : 9.1.10: Hiển thị bảng xếp hạng:\nRank (#), Player, Difficulty, Time (s), Elo, Played At
+        opt 9.1.11: Nếu eloAfter <= 0
+            JSP -> JSP : Hiển thị "-" thay cho giá trị Elo
+        end
+        
+        JSP --> User : Hiển thị giao diện hoàn chỉnh
+        deactivate JSP
+    end
+end
+deactivate Servlet
+
+== 9.2 Luồng thay thế: Người dùng lọc bảng xếp hạng ==
+
+User -> JSP : 9.2.1: Chọn mức khó từ dropdown & nhấn "Filter"
+activate JSP
+JSP -> Filter : 9.2.2: Gửi HTTP GET tới /leaderboard?difficulty={giá_trị}
+deactivate JSP
+activate Filter
+
+Filter -> Filter : Xác nhận public path
+Filter -> Servlet : Chuyển tiếp yêu cầu
+deactivate Filter
+activate Servlet
+
+note over Servlet : 9.2.3: Tiếp tục tiến trình từ bước 9.1.3 của Basic Flow\nvới difficulty đã chọn.
+
+Servlet -> JSP : Forward request sau khi lấy xong dữ liệu
+deactivate Servlet
+activate JSP
+JSP -> JSP : 9.2.4: Hiển thị lại dropdown với thuộc tính selected cho độ khó đang lọc
+JSP --> User : Hiển thị bảng xếp hạng đã lọc
+deactivate JSP
+
+@enduml

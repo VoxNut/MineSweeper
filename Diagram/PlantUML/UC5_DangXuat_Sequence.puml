@@ -1,0 +1,77 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+skinparam style strictuml
+
+' Clean, minimal monochrome style
+skinparam ArrowColor #000000
+skinparam ActorBorderColor #000000
+skinparam ActorBackgroundColor #FFFFFF
+skinparam LifeLineBorderColor #000000
+skinparam LifeLineBackgroundColor #FFFFFF
+skinparam ParticipantBorderColor #000000
+skinparam ParticipantBackgroundColor #FFFFFF
+skinparam BoxBorderColor #000000
+skinparam BoxBackgroundColor transparent
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+skinparam GroupBorderColor #000000
+skinparam GroupBackgroundColor transparent
+skinparam GroupHeaderBackgroundColor #FFFFFF
+
+title UC-5: Đăng xuất (Sequence Diagram)
+
+box "Client / Frontend"
+actor "Người dùng\n(Player/Admin)" as User
+participant "Frontend" as FE
+end box
+
+box "Server / Backend"
+participant "Backend\n(/auth/logout)" as BE
+participant "HttpSession" as Session
+end box
+
+autonumber stop
+
+== 5.1 Basic Flow: Đăng xuất ==
+
+User -> FE : 5.1.1: Nhấn nút "Logout" trên thanh điều hướng
+activate FE
+
+FE -> FE : 5.1.2: Thực thi sự kiện JavaScript onClick
+
+alt 5.3 Luồng ngoại lệ: Lỗi mất kết nối mạng (Request bị nghẽn)
+    FE -[#red]> BE : 5.1.3: Gửi HTTP POST tới /auth/logout (Thất bại)
+    activate BE
+    note over FE, BE : 5.3.1: Request API bị nghẽn (mạng lỗi, server tắt)
+    BE --[#red]/ FE : Không phản hồi / Hết hạn kết nối
+    deactivate BE
+    FE -> FE : 5.3.2: Bắt lỗi (exception) trong khối catch
+    FE -> User : 5.3.3: In lỗi ra console hoặc gọi alert\n(Trong khối finally: cố gắng chuyển hướng)
+    FE -> User : Chuyển hướng người dùng về trang Đăng nhập (/login)
+else Kết nối mạng hoạt động bình thường
+    FE -> BE : 5.1.3: Gửi request dạng HTTP POST đến endpoint API /auth/logout
+    activate BE
+
+    BE -> BE : 5.1.4: Tiếp nhận yêu cầu và truy xuất HttpSession hiện tại
+
+    alt 5.2 Luồng ngoại lệ: Không tìm thấy phiên làm việc (Session đã hết hạn)
+        BE -> BE : 5.2.1: Gọi lấy session nhưng nhận về kết quả null
+        BE -> BE : 5.2.2: Chủ động bỏ qua lệnh huỷ session
+    else Session tồn tại
+        BE -> Session : 5.1.5: Gọi hàm session.invalidate() để xóa dữ liệu phiên
+        activate Session
+        Session --> BE : Hủy session thành công
+        deactivate Session
+    end
+
+    BE --> FE : 5.1.6: Phản hồi JSON {"success": true} kèm mã HTTP 200 OK
+    deactivate BE
+
+    FE -> FE : 5.1.7: Tiếp nhận kết quả báo thành công
+    FE -> User : 5.1.8: Ra lệnh cho trình duyệt chuyển hướng về URL /login
+    note over User : 5.1.9: Trình duyệt tải lại và hiển thị giao diện trang Đăng nhập
+    deactivate FE
+end
+
+@enduml

@@ -1,0 +1,8 @@
+
+RELEASE TESTING REPORT
+Feature: UC-2 Email/Password Auth
+Tester: Ta Van Huy
+Developer: Vo Minh Nhut
+Status: PASSED
+
+# Commit: Release testing: Thực hiện kiểm thử độc lập cho UC-2 (Đăng nhập Email/Password) của Nhựt | Author: Tạ Văn Huy | Date: 2026-06-05 15:30:00

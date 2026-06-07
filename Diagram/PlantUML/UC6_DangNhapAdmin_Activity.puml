@@ -1,0 +1,73 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+
+' Clean, minimal monochrome style
+skinparam ActivityBorderColor #000000
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityStartColor #000000
+skinparam ActivityEndColor #000000
+skinparam ArrowColor #000000
+skinparam PartitionBorderColor #000000
+skinparam PartitionBackgroundColor transparent
+skinparam ConditionBorderColor #000000
+skinparam ConditionBackgroundColor #FFFFFF
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+
+title UC-6: Đăng nhập Quản trị viên (Activity Diagram)
+
+|Quản trị viên|
+start
+:6.1.1: Nhập mật khẩu bảo mật;\nKích hoạt sự kiện đăng nhập;
+
+|Frontend|
+:6.1.2: Validate để đảm bảo trường Password không bị bỏ trống;
+note right
+  **[Ngoại lệ 6.3: Không nhập mật khẩu]**
+  Nếu ô nhập mật khẩu để trống:
+  - 6.3.1: Phát hiện ô nhập mật khẩu trống
+  - 6.3.2: Dùng hàm showAlert hiển thị "Please enter the admin password"
+  - 6.3.3: Hủy luồng xử lý
+end note
+
+:6.1.3: Gọi Firebase SDK (signInWithEmailAndPassword)\nbằng tài khoản hệ thống mặc định (msadmin@minesweeper.local)\nvà mật khẩu vừa nhập;
+
+|Firebase Auth|
+:Xác thực mật khẩu đối với tài khoản tương ứng;
+note right
+  **[Ngoại lệ 6.4: Mật khẩu không chính xác]**
+  Nếu Firebase Auth đối chiếu thất bại:
+  - 6.4.1: Báo lỗi xác thực mật khẩu sai
+  - 6.4.2: Frontend hiển thị thông báo "Admin login failed" màu đỏ
+  - 6.4.3: Hủy luồng xử lý
+end note
+
+:6.1.4: Firebase Auth xác thực thành công;\n6.1.5: Cấp và trích xuất mã idToken (JWT) về Frontend;
+
+|Frontend|
+:6.1.6: Gửi yêu cầu HTTP POST kèm idToken tới Backend API (/auth/login);
+
+|Backend|
+:6.1.7: Gọi Firebase Admin SDK để giải mã và verify idToken;\n6.1.8: Trích xuất dữ liệu định danh (uid) từ token;\n6.1.9: Truy vấn bản ghi User từ Firestore qua UserDAO;
+
+|Firestore|
+:Thực hiện truy vấn bản ghi;
+
+|Backend|
+:Nhận bản ghi User từ CSDL;\n6.1.10: Cập nhật lastLoginAt vào Firestore;
+
+|Firestore|
+:Ghi nhận mốc thời gian lastLoginAt;
+
+|Backend|
+:6.1.11: Tạo HttpSession và gán thuộc tính role="admin";\n6.1.12: Phản hồi JSON thành công kèm thuộc tính role;
+
+|Frontend|
+if (Kiểm tra thuộc tính role?) then (role == "admin")
+    :6.1.13: Thực hiện chuyển hướng trình duyệt tới URL /admin/users;
+else (role != "admin" [Thay thế 6.2])
+    :6.2.2: Phát hiện thuộc tính role không phải "admin";\n6.2.3: Từ chối truy cập /admin/users, tự động đẩy tới URL /game;
+endif
+stop
+@enduml

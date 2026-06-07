@@ -1,0 +1,91 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+
+' Clean, minimal monochrome style
+skinparam ActivityBorderColor #000000
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityStartColor #000000
+skinparam ActivityEndColor #000000
+skinparam ArrowColor #000000
+skinparam PartitionBorderColor #000000
+skinparam PartitionBackgroundColor transparent
+skinparam ConditionBorderColor #000000
+skinparam ConditionBackgroundColor #FFFFFF
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+
+title UC-1: Đăng nhập bằng tài khoản Google (Activity Diagram)
+
+|Người dùng|
+start
+:1.1.1: Nhấn nút "Sign in with Google";
+
+|Frontend|
+:1.1.2: Gọi Firebase SDK để mở cửa sổ popup xác thực Google;
+
+|Firebase Auth|
+:Hiển thị popup chọn tài khoản Google;
+
+|Người dùng|
+:1.1.3: Chọn tài khoản và đồng ý cấp quyền;
+note right
+  **[Ngoại lệ 1.3: Đóng popup]**
+  Nếu người dùng đóng cửa sổ popup:
+  - 1.3.1: SDK trả lỗi auth/popup-closed-by-user
+  - 1.3.2: Frontend hiển thị "Login failed"
+  - 1.3.3: Hủy luồng xử lý
+end note
+
+|Firebase Auth|
+:1.1.4: Xác thực thành công và trả về idToken;
+
+|Frontend|
+:1.1.5: Gửi request POST kèm idToken lên Backend (/auth/login);
+
+|Backend|
+:1.1.6: Gọi Firebase Admin SDK để xác minh idToken;
+note right
+  **[Ngoại lệ 1.4: Lỗi Token]**
+  Nếu Token không hợp lệ hoặc hết hạn:
+  - 1.4.1: Admin SDK ném ra ngoại lệ
+  - 1.4.2: Backend trả về mã HTTP 500
+  - 1.4.3: Frontend hiển thị "Login failed"
+  - 1.4.4: Hủy luồng xử lý
+end note
+
+:1.1.7: Trích xuất thông tin định danh (uid, email, name, photoURL);
+:1.1.8: Truy vấn Firestore tìm bản ghi User theo uid;
+
+|Firestore|
+:Thực hiện truy vấn;
+
+|Backend|
+if (Tài khoản đã tồn tại?) then (Chưa tồn tại)
+    :1.1.9: Khởi tạo thông tin User mới\n(role="player", elo=1000, blocked=false);
+else (Đã tồn tại [Thay thế 1.2])
+    :1.2.2: Cập nhật thông tin User\n(displayName, photoURL từ Google,\nlastLoginAt = thời gian hiện tại);
+endif
+
+:1.1.10: Lưu (upsert) đối tượng User vào Firestore;
+
+|Firestore|
+:Ghi nhận thông tin User;
+
+|Backend|
+:Kiểm tra thuộc tính blocked của tài khoản;
+note right
+  **[Ngoại lệ 1.5: Tài khoản bị khóa]**
+  Nếu thuộc tính blocked == true:
+  - 1.5.1: Phát hiện tài khoản bị khóa
+  - 1.5.2: Từ chối tạo Session, trả về HTTP 403
+  - 1.5.3: Frontend hiển thị "User is blocked"
+  - 1.5.4: Hủy luồng xử lý
+end note
+
+:1.1.11: Tạo HttpSession và lưu thuộc tính (uid, displayName, role, photoURL);\n1.1.12: Trả về kết quả HTTP 200 OK;
+
+|Frontend|
+:1.1.13: Chuyển hướng người dùng vào trang trò chơi (/game);
+stop
+@enduml

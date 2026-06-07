@@ -1,0 +1,8 @@
+
+RELEASE TESTING REPORT
+Feature: UC-3 Account Registration
+Tester: Nguyen Duy Khanh
+Developer: Vo Minh Nhut
+Status: PASSED
+
+# Commit: Release testing: Chạy test case kiểm tra logic đăng ký tài khoản mới UC-3 của Nhựt | Author: Nguyễn Duy Khánh | Date: 2026-06-05 16:15:00

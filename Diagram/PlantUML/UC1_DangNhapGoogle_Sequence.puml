@@ -1,0 +1,110 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+skinparam style strictuml
+
+' Clean, minimal monochrome style
+skinparam ArrowColor #000000
+skinparam ActorBorderColor #000000
+skinparam ActorBackgroundColor #FFFFFF
+skinparam LifeLineBorderColor #000000
+skinparam LifeLineBackgroundColor #FFFFFF
+skinparam ParticipantBorderColor #000000
+skinparam ParticipantBackgroundColor #FFFFFF
+skinparam BoxBorderColor #000000
+skinparam BoxBackgroundColor transparent
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+skinparam GroupBorderColor #000000
+skinparam GroupBackgroundColor transparent
+skinparam GroupHeaderBackgroundColor #FFFFFF
+
+title UC-1: Đăng nhập bằng tài khoản Google (Sequence Diagram)
+
+box "Client / Frontend"
+actor "Người dùng" as User
+participant "Frontend" as FE
+end box
+
+box "Firebase / Google"
+participant "Firebase SDK" as AuthSDK
+end box
+
+box "Server / Backend"
+participant "Backend\n(/auth/login)" as BE
+participant "Firebase Admin SDK" as AdminSDK
+database "Firestore" as DB
+end box
+
+autonumber stop
+
+== 1.1 Basic Flow: Đăng nhập Google ==
+
+User -> FE : 1.1.1: Nhấn nút "Sign in with Google"
+activate FE
+
+FE -> AuthSDK : 1.1.2: Gọi Firebase SDK mở popup xác thực
+activate AuthSDK
+
+AuthSDK -> User : Hiển thị cửa sổ popup xác thực Google
+User -> AuthSDK : 1.1.3: Chọn tài khoản và cấp quyền
+
+alt 1.3 Luồng ngoại lệ: Người dùng đóng popup
+    AuthSDK -> FE : 1.3.1: Trả về lỗi auth/popup-closed-by-user
+    FE -> User : 1.3.2: Hiển thị thông báo "Login failed"
+    note over FE : 1.3.3: Huỷ luồng xử lý
+else Xác thực thành công
+    AuthSDK -> FE : 1.1.4: Trả về idToken (JWT)
+    deactivate AuthSDK
+
+    FE -> BE : 1.1.5: Gửi HTTP POST kèm idToken
+    activate BE
+
+    BE -> AdminSDK : 1.1.6: Xác minh idToken
+    activate AdminSDK
+
+    alt 1.4 Luồng ngoại lệ: Token không hợp lệ hoặc hết hạn
+        AdminSDK --> BE : 1.4.1: Ném ra ngoại lệ verify
+        deactivate AdminSDK
+        BE --> FE : 1.4.2: Trả về mã HTTP 500 Internal Server Error
+        FE -> User : 1.4.3: Hiển thị thông báo "Login failed"
+        note over FE : 1.4.4: Huỷ luồng xử lý
+    else Token hợp lệ
+        BE -> AdminSDK : Trích xuất dữ liệu
+        activate AdminSDK
+        AdminSDK --> BE : 1.1.7: Trả về uid, email, name, photoURL
+        deactivate AdminSDK
+
+        BE -> DB : 1.1.8: Truy vấn bản ghi User qua uid
+        activate DB
+        DB --> BE : Kết quả truy vấn
+        deactivate DB
+
+        alt 1.1.9: Tài khoản chưa tồn tại (Tạo mới)
+            BE -> BE : Khởi tạo đối tượng User mới\n(role="player", elo=1000, blocked=false)
+        else 1.2 Luồng thay thế: Tài khoản đã tồn tại
+            BE -> BE : 1.2.2: Cập nhật thông tin User\n(displayName, photoURL, lastLoginAt)
+        end
+
+        BE -> DB : 1.1.10: Lưu (upsert) đối tượng User vào Firestore
+        activate DB
+        DB --> BE : Phản hồi thành công
+        deactivate DB
+
+        alt 1.5 Luồng ngoại lệ: Tài khoản bị Admin khóa
+            BE -> BE : 1.5.1: Phát hiện thuộc tính blocked = true
+            BE --> FE : 1.5.2: Từ chối tạo Session và trả về HTTP 403 Forbidden
+            FE -> User : 1.5.3: Hiển thị thông báo "User is blocked"
+            note over FE : 1.5.4: Huỷ luồng xử lý
+        else Tài khoản hoạt động bình thường (blocked = false)
+            BE -> BE : 1.1.11: Tạo HttpSession và lưu thuộc tính\n(uid, displayName, role, photoURL)
+            BE --> FE : 1.1.12: Trả về phản hồi thành công (HTTP 200 OK)
+            deactivate BE
+            
+            FE -> User : 1.1.13: Chuyển hướng người dùng vào trang trò chơi (/game)
+            deactivate FE
+        end
+    end
+end
+
+@enduml

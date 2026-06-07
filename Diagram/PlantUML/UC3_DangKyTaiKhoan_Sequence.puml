@@ -1,0 +1,114 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+skinparam style strictuml
+
+' Clean, minimal monochrome style
+skinparam ArrowColor #000000
+skinparam ActorBorderColor #000000
+skinparam ActorBackgroundColor #FFFFFF
+skinparam LifeLineBorderColor #000000
+skinparam LifeLineBackgroundColor #FFFFFF
+skinparam ParticipantBorderColor #000000
+skinparam ParticipantBackgroundColor #FFFFFF
+skinparam BoxBorderColor #000000
+skinparam BoxBackgroundColor transparent
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+skinparam GroupBorderColor #000000
+skinparam GroupBackgroundColor transparent
+skinparam GroupHeaderBackgroundColor #FFFFFF
+
+title UC-3: Đăng ký tài khoản (Sequence Diagram)
+
+box "Client / Frontend"
+actor "Người dùng\n(Khách chưa có tài khoản)" as User
+participant "Frontend" as FE
+end box
+
+box "Firebase / Google"
+participant "Firebase SDK" as AuthSDK
+end box
+
+box "Server / Backend"
+participant "Backend\n(/auth/login)" as BE
+participant "Firebase Admin SDK" as AdminSDK
+database "Firestore" as DB
+end box
+
+autonumber stop
+
+== 3.1 Basic Flow: Đăng ký tài khoản ==
+
+User -> FE : 3.1.1: Nhập Name, Email, Password, Confirm Password\nvà nhấn nút Đăng ký (Register)
+activate FE
+
+FE -> FE : 3.1.2: Validate dữ liệu hợp lệ tại Client
+
+alt 3.2 Luồng ngoại lệ: Dữ liệu nhập vào không hợp lệ
+    note over FE : Phát hiện: lỗi trường trống, password < 8 ký tự,\nhoặc confirm password không khớp
+    FE -> User : 3.2.2: Hiển thị dòng cảnh báo lỗi cụ thể dưới ô nhập liệu tương ứng
+    note over FE : 3.2.3: Huỷ tiến trình đăng ký
+else Dữ liệu hợp lệ
+    FE -> AuthSDK : 3.1.3: Gọi createUserWithEmailAndPassword(email, password)
+    activate AuthSDK
+
+    alt 3.3 Luồng ngoại lệ: Lỗi đăng ký từ Firebase
+        AuthSDK --> FE : 3.3.1: Firebase Auth từ chối tạo tài khoản\n(Lý do: Email đã tồn tại hoặc sai định dạng)
+        FE -> User : 3.3.2: Gọi hàm showAlert hiển thị "Registration failed"
+        note over FE : 3.3.3: Huỷ tiến trình đăng ký
+    else Tạo tài khoản thành công
+        AuthSDK --> FE : 3.1.4: Tạo thành công, trả về UserInfo ban đầu
+        deactivate AuthSDK
+
+        FE -> AuthSDK : 3.1.5: Gọi updateProfile để cập nhật tên hiển thị (Name)
+        activate AuthSDK
+        AuthSDK --> FE : Cập nhật thành công
+        deactivate AuthSDK
+
+        FE -> AuthSDK : 3.1.6: Lấy idToken (JWT) sau khi cập nhật xong
+        activate AuthSDK
+        AuthSDK --> FE : Trả về idToken (JWT)
+        deactivate AuthSDK
+
+        FE -> BE : 3.1.7: Gửi HTTP POST kèm idToken
+        activate BE
+
+        BE -> AdminSDK : 3.1.8: Sử dụng Firebase Admin để xác thực idToken
+        activate AdminSDK
+
+        alt 3.4 Luồng ngoại lệ: Lỗi đồng bộ Token trên máy chủ
+            AdminSDK --> BE : 3.4.1: Báo lỗi idToken không hợp lệ (mất kết nối / lệch giờ)
+            deactivate AdminSDK
+            BE --> FE : 3.4.2: Ném ngoại lệ và trả về 500 Internal Server Error
+            FE -> User : 3.4.3: Gọi hàm showAlert hiển thị "Registration failed"
+            note over FE : 3.4.4: Huỷ luồng tự động đăng nhập (phải đăng nhập thủ công sau)
+        else Token hợp lệ
+            BE -> AdminSDK : Giải mã lấy uid và email
+            activate AdminSDK
+            AdminSDK --> BE : Trả về uid và email
+            deactivate AdminSDK
+
+            BE -> DB : 3.1.9: Kiểm tra sự tồn tại của User qua UserDAO
+            activate DB
+            DB --> BE : Trả về null (chưa tồn tại)
+            deactivate DB
+
+            BE -> BE : 3.1.10: Khởi tạo đối tượng User mới\n(role="player", elo=1000)
+            
+            BE -> DB : 3.1.11: Lưu (upsert) đối tượng User vào Firestore
+            activate DB
+            DB --> BE : Lưu thành công
+            deactivate DB
+
+            BE -> BE : 3.1.12: Tạo HttpSession chứa thông tin cá nhân
+            BE --> FE : Phản hồi HTTP 200 OK
+            deactivate BE
+
+            FE -> User : 3.1.13: Tự động chuyển hướng người dùng vào trang /game
+            deactivate FE
+        end
+    end
+end
+
+@enduml

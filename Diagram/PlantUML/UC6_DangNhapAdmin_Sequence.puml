@@ -1,0 +1,104 @@
+@startuml
+skinparam defaultFontName "Arial"
+skinparam backgroundcolor transparent
+skinparam style strictuml
+
+' Clean, minimal monochrome style
+skinparam ArrowColor #000000
+skinparam ActorBorderColor #000000
+skinparam ActorBackgroundColor #FFFFFF
+skinparam LifeLineBorderColor #000000
+skinparam LifeLineBackgroundColor #FFFFFF
+skinparam ParticipantBorderColor #000000
+skinparam ParticipantBackgroundColor #FFFFFF
+skinparam BoxBorderColor #000000
+skinparam BoxBackgroundColor transparent
+skinparam NoteBorderColor #000000
+skinparam NoteBackgroundColor #FFFFFF
+skinparam GroupBorderColor #000000
+skinparam GroupBackgroundColor transparent
+skinparam GroupHeaderBackgroundColor #FFFFFF
+
+title UC-6: Đăng nhập Quản trị viên (Sequence Diagram)
+
+box "Client / Frontend"
+actor "Quản trị viên\n(Admin)" as Admin
+participant "Frontend\n(/admin/login)" as FE
+end box
+
+box "Firebase / Google"
+participant "Firebase SDK" as AuthSDK
+end box
+
+box "Server / Backend"
+participant "Backend\n(/auth/login)" as BE
+participant "Firebase Admin SDK" as AdminSDK
+database "Firestore" as DB
+end box
+
+autonumber stop
+
+== 6.1 Basic Flow: Đăng nhập Admin ==
+
+Admin -> FE : 6.1.1: Nhập mật khẩu bảo mật và kích hoạt đăng nhập
+activate FE
+
+FE -> FE : 6.1.2: Validate trường Password không bị bỏ trống
+
+alt 6.3 Luồng ngoại lệ: Không nhập mật khẩu
+    note over FE : Phát hiện ô nhập mật khẩu trống
+    FE -> Admin : 6.3.2: Dùng hàm showAlert hiển thị "Please enter the admin password"
+    note over FE : 6.3.3: Huỷ luồng xử lý
+else Có nhập mật khẩu
+    FE -> AuthSDK : 6.1.3: Gọi signInWithEmailAndPassword(msadmin@minesweeper.local, password)
+    activate AuthSDK
+    note over FE, AuthSDK : Email của admin được ẩn hoàn toàn khỏi giao diện (BR1)
+
+    alt 6.4 Luồng ngoại lệ: Mật khẩu không chính xác
+        AuthSDK --> FE : 6.4.1: Firebase Auth báo lỗi mật khẩu sai
+        FE -> Admin : 6.4.2: Hiển thị dòng chữ "Admin login failed" màu đỏ
+        note over FE : 6.4.3: Huỷ luồng xử lý
+    else Xác thực mật khẩu thành công
+        AuthSDK --> FE : 6.1.4: Firebase Auth xác thực thành công
+        deactivate AuthSDK
+
+        FE -> AuthSDK : 6.1.5: Trích xuất idToken (JWT) từ Firebase SDK
+        activate AuthSDK
+        AuthSDK --> FE : Trả về idToken
+        deactivate AuthSDK
+
+        FE -> BE : 6.1.6: Gửi yêu cầu HTTP POST kèm idToken
+        activate BE
+
+        BE -> AdminSDK : 6.1.7: Gọi Firebase Admin SDK để verify idToken
+        activate AdminSDK
+        AdminSDK --> BE : 6.1.8: Trả về uid trích xuất được
+        deactivate AdminSDK
+
+        BE -> DB : 6.1.9: Truy vấn bản ghi User từ Firestore qua UserDAO
+        activate DB
+        DB --> BE : Bản ghi User (role="admin", blocked=false)
+        deactivate DB
+
+        BE -> DB : 6.1.10: Cập nhật lastLoginAt vào cơ sở dữ liệu
+        activate DB
+        DB --> BE : Cập nhật thành công
+        deactivate DB
+
+        BE -> BE : 6.1.11: Tạo HttpSession và lưu thuộc tính role="admin"
+        BE --> FE : 6.1.12: Phản hồi JSON thành công kèm theo quyền hạn hiện tại (role)
+        deactivate BE
+
+        alt 6.1.13: Tiếp nhận và xử lý phân quyền trên Frontend
+            alt 6.1.13: Quyền hạn hợp lệ (role = "admin")
+                FE -> Admin : 6.1.13: Điều hướng trình duyệt tới URL /admin/users
+            else 6.2 Luồng thay thế: Không có quyền Admin (role != "admin")
+                BE --> FE : 6.2.1: Phản hồi role khác "admin" (do DB sai lệch/bị sửa quyền)
+                FE -> Admin : 6.2.3: Từ chối /admin/users, tự động đẩy tới URL /game
+            end
+        end
+        deactivate FE
+    end
+end
+
+@enduml

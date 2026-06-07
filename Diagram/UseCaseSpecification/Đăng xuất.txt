@@ -1,0 +1,46 @@
+Use Case ID
+UC-5
+Use Case Name
+Đăng xuất
+Description
+Cho phép người dùng kết thúc phiên làm việc an toàn, huỷ bỏ các quyền truy cập hiện tại trên trình duyệt và tự động được đưa trở lại trang Đăng nhập.
+Actor(s)
+Người dùng (Player), Quản trị viên (Admin)
+Priority
+Common
+Trigger
+Người dùng nhấn vào nút "Logout" hiển thị trên thanh Menu điều hướng (Header/Nav bar).
+Pre-Condition(s)
+- Người dùng đang ở trạng thái đã đăng nhập (có phiên làm việc HttpSession hợp lệ trên máy chủ).
+Post-Condition(s)
+- Thành công: Phiên làm việc trên máy chủ bị xóa vĩnh viễn (invalidated). Người dùng bị đưa trở lại giao diện /login và không thể truy cập ngược lại các trang yêu cầu quyền nội bộ nếu không đăng nhập lại.
+- Thất bại: Trạng thái người dùng không đổi (Rất hiếm, chủ yếu do mất kết nối mạng).
+Basic Flow
+5.1 Basic Flow
+5.1.1 Người dùng nhấn nút "Logout" trên thanh điều hướng.
+5.1.2 Frontend thực thi sự kiện JavaScript onClick tương ứng.
+5.1.3 Frontend gửi request dạng HTTP POST đến endpoint API /auth/logout.
+5.1.4 Backend (LogoutServlet) tiếp nhận yêu cầu và truy xuất HttpSession hiện tại của người dùng.
+5.1.5 Backend thực hiện gọi hàm session.invalidate() để xóa ngay lập tức toàn bộ dữ liệu phiên.
+5.1.6 Backend phản hồi kết quả JSON {"success": true} kèm mã HTTP 200 OK về cho Frontend.
+5.1.7 Frontend tiếp nhận kết quả báo thành công.
+5.1.8 Frontend ra lệnh cho trình duyệt chuyển hướng (redirect) về URL /login.
+5.1.9 Trình duyệt tải lại và hiển thị giao diện trang Đăng nhập.
+Alternative Flow
+(Không có luồng thay thế đáng kể)
+Exception Flow
+5.2 Không tìm thấy phiên làm việc (Tại bước 5.1.4)
+5.2.1 Backend gọi lấy session nhưng nhận về kết quả null (do phiên đã hết hạn từ trước đó).
+5.2.2 Backend nhận thấy không có session nào, chủ động bỏ qua lệnh huỷ.
+5.2.3 Luồng tiếp tục tại bước 5.1.6 của Basic Flow (vẫn trả kết quả 200 OK để client redirect một cách trơn tru).
+
+5.3 Lỗi mất kết nối mạng (Tại bước 5.1.3 hoặc 5.1.6)
+5.3.1 Request API tới /auth/logout bị nghẽn (mạng lỗi, server tắt).
+5.3.2 Frontend bắt lỗi (exception) trong khối catch.
+5.3.3 Frontend có thể in lỗi ra console hoặc gọi alert (tuỳ thuộc vào file JS cụ thể như header.js hay admin-auth.js). Ở khối finally, Frontend vẫn cố gắng chuyển hướng người dùng ra màn hình đăng nhập.
+Business Rules
+- BR1: Hành động đăng xuất là một chiều và chỉ diễn ra ở cấp độ phiên kết nối (Session), không thực hiện lệnh xóa hay cập nhật bất kỳ thuộc tính nào vào bản ghi User trong Firestore.
+Non-functional Requirements
+- NFR1 - Security: Server phải xóa toàn bộ thuộc tính (attributes) liên kết với session đó để tránh các rủi ro bảo mật về việc tái sử dụng Session ID cũ.
+- NFR2 - Performance: Lệnh API đăng xuất và chuyển hướng trang phải phản ứng tức thì không có độ trễ lớn.
+

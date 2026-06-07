@@ -21,20 +21,19 @@ import java.util.logging.Logger;
  * <p>
  * Luồng cơ bản (UC-9, Basic Flow 9.1):
  * <ol>
- * <li>9.1.3 — Đọc tham số "difficulty" từ query string.</li>
- * <li>9.1.4 — Gọi LeaderboardService.getTopScores() để lấy dữ liệu.</li>
- * <li>9.1.8 — Gán kết quả vào request attributes.</li>
- * <li>9.1.9 — Forward sang leaderboard.jsp để render giao diện.</li>
+ *   <li>9.1.3 — Đọc tham số "difficulty" từ query string.</li>
+ *   <li>9.1.4 — Gọi LeaderboardService.getTopScores() để lấy dữ liệu.</li>
+ *   <li>9.1.8 — Gán kết quả vào request attributes.</li>
+ *   <li>9.1.9 — Forward sang leaderboard.jsp để render giao diện.</li>
  * </ol>
  * Exception Flow (UC-9, 9.4): Nếu Firestore lỗi, trả về HTTP 500.
  */
 public class LeaderboardServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(LeaderboardServlet.class.getName());
-    private final LeaderboardService leaderboardService = new LeaderboardService();
+    LeaderboardService leaderboardService = new LeaderboardService();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // UC-9 (9.1.3): Đọc tham số difficulty từ query string.
         // Nếu không có tham số, giá trị sẽ là null và LeaderboardService sẽ
         // hiểu là "all" — hiển thị tất cả mức độ khó (UC-9, BR3).

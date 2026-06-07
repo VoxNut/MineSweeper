@@ -1,0 +1,63 @@
+Use Case ID
+UC-9
+Use Case Name
+Xem bảng xếp hạng
+Description
+Cho phép người dùng (cả khách chưa đăng nhập lẫn người dùng đã đăng nhập) xem bảng xếp hạng các thành tích tốt nhất của toàn hệ thống. Bảng xếp hạng hiển thị tối đa 20 kết quả hàng đầu, được sắp xếp theo thời gian hoàn thành (timeSec) tăng dần và có thể lọc theo mức độ khó (easy, medium, hard, custom, hoặc all).
+Actor(s)
+Người dùng chưa đăng nhập (Guest), Người dùng đã đăng nhập (Player), Quản trị viên (Admin)
+Priority
+Important
+Trigger
+Người dùng điều hướng tới URL /leaderboard (có hoặc không có tham số difficulty).
+Pre-Condition(s)
+- Hệ thống phải có kết nối internet và Firestore phải đang hoạt động.
+- Không yêu cầu người dùng phải đăng nhập (đây là trang công khai - public path).
+Post-Condition(s)
+- Thành công: Trang leaderboard.jsp được render với danh sách điểm số tối đa 20 bản ghi, được sắp xếp theo timeSec tăng dần.
+- Thất bại: Hệ thống trả về HTTP 500 Internal Server Error.
+Basic Flow
+9.1 Basic Flow
+9.1.1 Người dùng truy cập URL /leaderboard (với tham số difficulty tùy chọn, mặc định là "all").
+9.1.2 AuthFilter kiểm tra đường dẫn và nhận ra /leaderboard là public path, cho yêu cầu đi qua mà không yêu cầu xác thực.
+9.1.3 LeaderboardServlet nhận HTTP GET request và đọc tham số difficulty từ query string.
+9.1.4 LeaderboardServlet gọi LeaderboardService.getTopScores(difficulty).
+9.1.5 LeaderboardService ủy thác yêu cầu cho ScoreDAO.getTopScores(difficulty, 20).
+9.1.6 ScoreDAO xây dựng truy vấn Firestore lên collection "scores":
+    9.1.6.1 Lọc các bản ghi có result = "win".
+    9.1.6.2 Lọc các bản ghi có flagged = false.
+    9.1.6.3 Nếu difficulty không phải "all", thêm điều kiện lọc difficulty.
+    9.1.6.4 Sắp xếp kết quả theo timeSec tăng dần (ASCENDING).
+    9.1.6.5 Giới hạn tối đa 20 bản ghi.
+9.1.7 ScoreDAO ánh xạ kết quả trả về thành danh sách đối tượng Score.
+9.1.8 LeaderboardServlet gán danh sách scores và giá trị difficulty vào request attributes.
+9.1.9 LeaderboardServlet forward request tới leaderboard.jsp để render giao diện.
+9.1.10 leaderboard.jsp hiển thị bảng xếp hạng với các cột: Rank (#), Player, Difficulty, Time (s), Elo, Played At.
+9.1.11 Nếu eloAfter <= 0, hiển thị "-" thay cho giá trị Elo.
+Alternative Flow
+9.2 Người dùng lọc bảng xếp hạng theo mức độ khó (Thay thế bước 9.1.1)
+9.2.1 Người dùng chọn một mức độ khó từ dropdown (easy / medium / hard / custom) và nhấn nút "Filter".
+9.2.2 Trình duyệt gửi HTTP GET tới /leaderboard?difficulty={giá_trị}.
+9.2.3 Tiếp tục tiến trình từ bước 9.1.3 của Basic Flow với difficulty đã được thiết lập.
+9.2.4 leaderboard.jsp hiển thị lại dropdown với giá trị đang được chọn (selected attribute).
+
+9.3 Bảng xếp hạng không có dữ liệu (Sau bước 9.1.7)
+9.3.1 ScoreDAO trả về danh sách rỗng (không có bản ghi nào thỏa điều kiện).
+9.3.2 leaderboard.jsp nhận được danh sách rỗng hoặc null, không render bất kỳ hàng nào trong <tbody>.
+9.3.3 Bảng hiển thị rỗng nhưng không có lỗi.
+Exception Flow
+9.4 Lỗi kết nối Firestore (Tại bước 9.1.6)
+9.4.1 Truy vấn Firestore ném ra ExecutionException hoặc InterruptedException.
+9.4.2 LeaderboardServlet bắt exception và ghi log ở cấp độ SEVERE.
+9.4.3 LeaderboardServlet trả về HTTP 500 Internal Server Error.
+9.4.4 Người dùng nhận được trang lỗi từ server.
+Business Rules
+- BR1: Chỉ các bản ghi có result = "win" mới được xét vào bảng xếp hạng; các ván thua không được hiển thị.
+- BR2: Các bản ghi bị đánh dấu gian lận (flagged = true) bị loại khỏi bảng xếp hạng.
+- BR3: Thứ hạng được xác định bởi thời gian hoàn thành (timeSec) tăng dần — thời gian càng ngắn, thứ hạng càng cao.
+- BR4: Số lượng bản ghi hiển thị tối đa là 20.
+- BR5: Trang leaderboard là trang công khai; không yêu cầu đăng nhập mới được xem.
+Non-functional Requirements
+- NFR1 - Availability: Trang leaderboard phải truy cập được với mọi người dùng kể cả khi chưa đăng nhập; AuthFilter phải luôn xác nhận /leaderboard là public path.
+- NFR2 - Performance: Truy vấn Firestore phải được thực thi và trả về kết quả trong thời gian hợp lý, không gây trải nghiệm chờ đợi đáng kể cho người dùng.
+- NFR3 - Data Integrity: Chỉ hiển thị dữ liệu sạch (result = "win" và flagged = false) để đảm bảo tính công bằng và tin cậy của bảng xếp hạng.

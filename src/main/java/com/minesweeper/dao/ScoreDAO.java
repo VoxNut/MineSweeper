@@ -36,16 +36,11 @@ public class ScoreDAO {
      * <p>
      * Logic áp dụng (theo thứ tự):
      * <ol>
-     * <li>UC-9 (9.1.6.1, BR1): Lọc result = "win" — chỉ vàn thắng mới được
-     * xét.</li>
-     * <li>UC-9 (9.1.6.2, BR2): Lọc flagged = false — loại bỏ bản ghi bị đánh dấu
-     * gian lận.</li>
-     * <li>UC-9 (9.1.6.3): Nếu difficulty không phải "all", thêm điều kiện lọc
-     * difficulty.</li>
-     * <li>UC-9 (9.1.6.4, BR3): Sắp xếp theo timeSec tăng dần — thời gian càng ngắn,
-     * thứ hạng càng cao.</li>
-     * <li>UC-9 (9.1.6.5, BR4): Giới hạn số bản ghi trả về theo tham số limit (mặc
-     * định 20).</li>
+     *   <li>UC-9 (9.1.6.1, BR1): Lọc result = "win" — chỉ vàn thắng mới được xét.</li>
+     *   <li>UC-9 (9.1.6.2, BR2): Lọc flagged = false — loại bỏ bản ghi bị đánh dấu gian lận.</li>
+     *   <li>UC-9 (9.1.6.3): Nếu difficulty không phải "all", thêm điều kiện lọc difficulty.</li>
+     *   <li>UC-9 (9.1.6.4, BR3): Sắp xếp theo timeSec tăng dần — thời gian càng ngắn, thứ hạng càng cao.</li>
+     *   <li>UC-9 (9.1.6.5, BR4): Giới hạn số bản ghi trả về theo tham số limit (mặc định 20).</li>
      * </ol>
      *
      * @param difficulty mức độ khó cần lọc (null / "all" = không lọc theo độ khó).
@@ -70,8 +65,7 @@ public class ScoreDAO {
         return mapScores(snapshot);
     }
 
-    public List<Score> getAllScores(String difficulty, String uid, Boolean flagged)
-            throws ExecutionException, InterruptedException {
+    public List<Score> getAllScores(String difficulty, String uid, Boolean flagged) throws ExecutionException, InterruptedException {
         Query query = db.collection("scores");
         if (difficulty != null && !difficulty.isEmpty() && !"all".equalsIgnoreCase(difficulty)) {
             query = query.whereEqualTo("difficulty", difficulty);

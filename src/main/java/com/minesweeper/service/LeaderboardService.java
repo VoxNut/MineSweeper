@@ -19,8 +19,7 @@ public class LeaderboardService {
      * UC-9 (9.1.4 → 9.1.5): Lấy top 20 bản ghi tốt nhất cho bảng xếp hạng.
      * Giới hạn mặc định là 20 bản ghi (UC-9, BR4).
      *
-     * @param difficulty mức độ khó cần lọc ("easy", "medium", "hard", "custom",
-     *                   "all", hoặc null).
+     * @param difficulty mức độ khó cần lọc ("easy", "medium", "hard", "custom", "all", hoặc null).
      * @return danh sách Score được sắp xếp theo timeSec tăng dần.
      */
     public List<Score> getTopScores(String difficulty) throws ExecutionException, InterruptedException {
