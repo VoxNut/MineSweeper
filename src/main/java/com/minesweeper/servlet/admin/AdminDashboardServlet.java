@@ -17,6 +17,16 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.minesweeper.util.FirebaseUtil;
 
+/**
+ * UC-11: Xem Dashboard
+ * Actor: Admin
+ * Mô tả:
+ * - Hiển thị thống kê tổng quan hệ thống
+ * - Tổng số người dùng
+ * - Tổng số lượt chơi
+ * - Tỷ lệ thắng/thua
+ * - Thống kê theo độ khó
+ */
 public class AdminDashboardServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(AdminDashboardServlet.class.getName());
 
