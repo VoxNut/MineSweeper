@@ -66,17 +66,23 @@ public class ScoreDAO {
     }
 
     public List<Score> getAllScores(String difficulty, String uid, Boolean flagged) throws ExecutionException, InterruptedException {
+        // [UC-14] 14.1.8 Khởi tạo query trên collection scores để quản lý lịch sử chơi/điểm.
         Query query = db.collection("scores");
         if (difficulty != null && !difficulty.isEmpty() && !"all".equalsIgnoreCase(difficulty)) {
+            // [UC-14] 14.1.8 Thêm điều kiện lọc theo độ khó nếu admin chọn difficulty cụ thể.
             query = query.whereEqualTo("difficulty", difficulty);
         }
         if (uid != null && !uid.isEmpty()) {
+            // [UC-14] 14.1.8 Thêm điều kiện lọc theo uid nếu admin nhập mã người dùng.
             query = query.whereEqualTo("uid", uid);
         }
         if (flagged != null) {
+            // [UC-14] 14.1.8 Thêm điều kiện lọc theo trạng thái flagged nếu có.
             query = query.whereEqualTo("flagged", flagged);
         }
+        // [UC-14] 14.1.9 Sắp xếp theo thời gian chơi mới nhất và giới hạn 100 bản ghi.
         query = query.orderBy("playedAt", Query.Direction.DESCENDING).limit(100);
+        // [UC-14] 14.1.10 / 14.1.11 Thực thi query và nhận scoreSnapshot từ Firestore.
         return mapScores(query.get().get());
     }
 
@@ -105,18 +111,22 @@ public class ScoreDAO {
     }
 
     public void updateFlagged(String scoreId, boolean isFlagged) throws ExecutionException, InterruptedException {
+        // [UC-14] 14.2.7 Cập nhật trường flagged của document scores/{scoreId}.
         db.collection("scores").document(scoreId).update("flagged", isFlagged).get();
     }
 
     public void flagScore(String scoreId, boolean isFlagged) throws ExecutionException, InterruptedException {
+        // [UC-14] 14.2.6 Điều phối thao tác Flag/Unflag sang updateFlagged().
         updateFlagged(scoreId, isFlagged);
     }
 
     public void deleteScore(String scoreId) throws ExecutionException, InterruptedException {
+        // [UC-14] 14.2.7 Xóa document scores/{scoreId} khỏi Firestore.
         db.collection("scores").document(scoreId).delete().get();
     }
 
     private List<Score> mapScores(QuerySnapshot snapshot) {
+        // [UC-14] 14.1.12 Ánh xạ scoreSnapshot thành danh sách đối tượng Score.
         List<Score> scores = new ArrayList<>();
         for (DocumentSnapshot doc : snapshot.getDocuments()) {
             Score score = doc.toObject(Score.class);
@@ -125,6 +135,7 @@ public class ScoreDAO {
                 scores.add(score);
             }
         }
+        // [UC-14] 14.1.13 Trả danh sách score đã ánh xạ về servlet/service gọi DAO.
         return scores;
     }
 }

@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.minesweeper.model.Score" %>
 <%
+    // [UC-14] 14.1.16 Đọc danh sách scores và các bộ lọc do AdminScoreServlet gắn vào request.
     List<Score> scoreList = (List<Score>) request.getAttribute("scores");
     if (scoreList == null) {
         scoreList = java.util.Collections.emptyList();
@@ -45,6 +46,7 @@
             <span class="score-chip">Showing <%= scoreList.size() %> scores</span>
         </div>
 
+        <%-- [UC-14] 14.1.2 / 14.1.16 Form GET cho phép lọc theo difficulty, uid và flagged. --%>
         <form method="get" action="<%= request.getContextPath() %>/admin/scores" class="filter-bar">
             <select name="difficulty">
                 <option value="all" <%= difficulty == null || "all".equalsIgnoreCase(difficulty) ? "selected" : "" %>>All difficulties</option>
@@ -75,6 +77,7 @@
             </tr>
             </thead>
             <tbody>
+            <%-- [UC-14] 14.1.16 / 14.1.18 Render danh sách score cùng trạng thái Flagged và thao tác quản trị. --%>
             <% for (Score score : scoreList) { %>
             <tr class="<%= score.isFlagged() ? "flagged-row" : "" %>">
                 <td>
@@ -88,11 +91,13 @@
                 <td><%= score.isFlagged() ? "Yes" : "No" %></td>
                 <td>
                     <div class="actions-col">
+                        <%-- [UC-14] 14.2.1 / 14.2.2 Gửi thao tác Flag hoặc Unflag cho score được chọn. --%>
                         <form method="post" action="<%= request.getContextPath() %>/admin/scores" style="margin:0;">
                             <input type="hidden" name="scoreId" value="<%= score.getScoreId() %>">
                             <input type="hidden" name="action" value="<%= score.isFlagged() ? "unflag" : "flag" %>">
                             <button class="btn" type="submit"><%= score.isFlagged() ? "Unflag" : "Flag as Fraud" %></button>
                         </form>
+                        <%-- [UC-14] 14.2.1 / 14.2.2 Gửi thao tác Delete để xóa score khỏi lịch sử/điểm. --%>
                         <form method="post" action="<%= request.getContextPath() %>/admin/scores" style="margin:0;" onsubmit="return confirm('Delete this score?');">
                             <input type="hidden" name="scoreId" value="<%= score.getScoreId() %>">
                             <input type="hidden" name="action" value="delete">
